@@ -3,7 +3,9 @@ package loginTests.steps;
 import base.TestBase;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+import pages.LoginPage;
 import pages.MainPage;
+import pages.MyAccountPage;
 
 public class StepsLoginTest extends TestBase {
 
@@ -13,5 +15,13 @@ public class StepsLoginTest extends TestBase {
     mainPage.goToLoginPage();
     Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
             "Переход на страницу авторизации не осуществлен");
+  }
+
+  @Step("Авторизация")
+  public void login(String login, String password) {
+    LoginPage loginPage = new LoginPage(webDriver);
+
+    Assert.assertTrue(loginPage.login(login, password),
+            "Авторизоваться не удалось");
   }
 }

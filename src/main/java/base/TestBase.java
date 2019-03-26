@@ -1,11 +1,9 @@
 package base;
 
+import allure.MyTestListener;
 import enums.DriverPaths;
 import enums.SiteAddress;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -13,8 +11,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import utility.Utility;
 
 import java.io.IOException;
@@ -22,15 +22,16 @@ import java.io.IOException;
 import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 
+@Listeners(MyTestListener.class)
 public class TestBase {
-  //TODO реализовать аллюр
+  //TODO реализовать прикрепление скриншота в аллюре
 
   protected static WebDriver webDriver;
   protected static String url;
 
 
   @BeforeClass
-  public static void setUp() throws IOException {
+  public static void setUp(ITestContext context) throws IOException {
     url = SiteAddress.addressMainPage.value;
 
     /* Проверим код ответа сервера */
@@ -58,14 +59,25 @@ public class TestBase {
         webDriver.get(url);
 
       }
+
+//      context.setAttribute("Base", webDriver);
     }
+
+  public static WebDriver getWebDriver() {
+     return webDriver;
+  }
 
   @AfterClass
   public static void tearDown() {
     webDriver.quit();
   }
 
+
   //----------------------------------------------------------------------------
+
+  public byte[] tekeScreenshot() {
+    return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+  }
 
   /**
    * Ожидание появления элемента на странице и ожидание видимости.
