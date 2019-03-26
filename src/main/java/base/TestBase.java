@@ -7,6 +7,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,12 +15,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import utility.Utility;
+
+import java.io.IOException;
 
 import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 
 public class TestBase {
-  //TODO добавить проверку кода ответа сервера (реализацию сделать в классе "Utility")
   //TODO реализовать аллюр
 
   protected static WebDriver webDriver;
@@ -27,10 +30,15 @@ public class TestBase {
 
 
   @BeforeClass
-  public static void setUp() {
+  public static void setUp() throws IOException {
     url = SiteAddress.addressMainPage.value;
 
-    setProperty("browser", "Firefox");
+    /* Проверим код ответа сервера */
+    Utility utility = new Utility();
+    utility.getStatusCodeOfServer(url);
+
+//    setProperty("browser", "Firefox");
+    setProperty("browser", "Chrome");
 
     /* Инициализация браузера */
       if (getProperty("browser").contains("irefox")) {
@@ -42,8 +50,10 @@ public class TestBase {
 
       } else if (getProperty("browser").contains("hrome") || getProperty("browser").contains("oogle")) {
         setProperty("webdriver.chrome.driver", DriverPaths.chrome.value);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--no-sandbox");
 
-        webDriver = new ChromeDriver();
+        webDriver = new ChromeDriver(chromeOptions);
         webDriver.manage().window().maximize();
         webDriver.get(url);
 
