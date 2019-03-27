@@ -11,7 +11,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -31,7 +30,7 @@ public class TestBase {
 
 
   @BeforeClass
-  public static void setUp(ITestContext context) throws IOException {
+  public static void setUp() throws IOException {
     url = SiteAddress.addressMainPage.value;
 
     /* Проверим код ответа сервера */
@@ -60,12 +59,8 @@ public class TestBase {
 
       }
 
-//      context.setAttribute("Base", webDriver);
     }
 
-  public static WebDriver getWebDriver() {
-     return webDriver;
-  }
 
   @AfterClass
   public static void tearDown() {

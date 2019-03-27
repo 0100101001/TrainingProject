@@ -1,14 +1,30 @@
 package allure;
 
-import base.TestBase;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+
 public class MyTestListener implements ITestListener {
+
+  private static ThreadLocal<WebDriver> localThreadDriver = new ThreadLocal<WebDriver>();
+
+  public synchronized static void setDriver(WebDriver driver){
+    localThreadDriver.set(driver);
+  }
+
+  public static WebDriver getDriver(){
+    return localThreadDriver.get();
+  }
+
   @Override
   public void onTestStart(ITestResult iTestResult) {
 
@@ -21,19 +37,30 @@ public class MyTestListener implements ITestListener {
 
   @Override
   public void onTestFailure(ITestResult iTestResult) {
-//    TestBase testBase = (TestBase) iTestResult.getTestContext().getAttribute("Base");
-    saveScreenshot();
+    saveScreenshot(tekeScreenshot(getDriver()));
   }
 
-  @Attachment(value = "Page screenshot", type = "image/png")
-  private byte[] saveScreenshot() {
-    return ((TakesScreenshot) TestBase.getWebDriver()).getScreenshotAs(OutputType.BYTES);
+  public byte[] tekeScreenshot(WebDriver webDriver) {
+
+    if (webDriver != null) {
+      return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+    }else {
+      try {
+        Robot robot = new Robot();
+        BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(screenShot, "JPG", byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+      } catch (Exception e) {
+        return new byte[]{};
+      }
+    }
   }
 
-//  @Attachment(value = "Page screenshot", type = "image/png")
-//  public byte[] saveScreenshot(byte[] screenShot) {
-//    return screenShot;
-//  }
+  @Attachment(value = "Page screenshot", type = "image/jpg")
+  public byte[] saveScreenshot(byte[] screenShot) {
+    return screenShot;
+  }
 
   @Override
   public void onTestSkipped(ITestResult iTestResult) {

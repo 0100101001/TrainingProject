@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import pages.LoginPage;
 import pages.MainPage;
-import pages.MyAccountPage;
 
 public class StepsLoginTest extends TestBase {
 
