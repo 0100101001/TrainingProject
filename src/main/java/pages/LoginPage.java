@@ -61,4 +61,13 @@ public class LoginPage extends TestBase {
 
     return waitVisibilityOrClickableElement(myAccountPage.userAvatar, 5);
   }
+
+  /**
+   * Проверка отображения сообщения о том, что логин или пароль неверны
+   * @return - результат
+   */
+  public boolean checkNotificationError() {
+    waitForPageLoad(webDriver);
+    return waitVisibilityOrClickableElement(messageNotificationError, 3);
+  }
 }

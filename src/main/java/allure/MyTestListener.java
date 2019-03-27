@@ -49,7 +49,7 @@ public class MyTestListener implements ITestListener {
         Robot robot = new Robot();
         BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(screenShot, "JPG", byteArrayOutputStream);
+        ImageIO.write(screenShot, "png", byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
       } catch (Exception e) {
         return new byte[]{};
@@ -57,7 +57,7 @@ public class MyTestListener implements ITestListener {
     }
   }
 
-  @Attachment(value = "Page screenshot", type = "image/jpg")
+  @Attachment(value = "Page screenshot", type = "image/png")
   public byte[] saveScreenshot(byte[] screenShot) {
     return screenShot;
   }
