@@ -17,10 +17,6 @@ public class MyTestListener implements ITestListener {
 
   private static ThreadLocal<WebDriver> localThreadDriver = new ThreadLocal<WebDriver>();
 
-  public synchronized static void setDriver(WebDriver driver){
-    localThreadDriver.set(driver);
-  }
-
   public static WebDriver getDriver(){
     return localThreadDriver.get();
   }

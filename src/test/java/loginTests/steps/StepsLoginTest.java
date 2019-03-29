@@ -3,8 +3,8 @@ package loginTests.steps;
 import base.TestBase;
 import io.qameta.allure.Step;
 import org.testng.Assert;
-import pages.LoginPage;
-import pages.MainPage;
+import pages.loginPage.LoginPage;
+import pages.mainPage.MainPage;
 
 public class StepsLoginTest extends TestBase {
 

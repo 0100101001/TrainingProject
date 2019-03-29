@@ -9,12 +9,8 @@ public class LoginTest extends StepsLoginTest {
 
   StepsLoginTest stepsLoginTest = new StepsLoginTest();
 
-  //TODO дописать тест/написать второй тест на негативную проверку(параметризовать)
-
   @Test(description = "Авторизация", dataProvider = "login", dataProviderClass = DataProvider.class)
   public void LoginTests(String login, String password) {
-//    String login = LoginAndPassword.login.value;
-//    String password = LoginAndPassword.password.value;
 
     /* Перейдем на страницу авторизации */
     stepsLoginTest.goToLoginPage();

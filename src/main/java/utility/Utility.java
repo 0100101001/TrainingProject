@@ -1,5 +1,8 @@
 package utility;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 import java.io.IOException;
@@ -23,4 +26,13 @@ public class Utility {
     System.out.println("Server response code: " + statusCode);
     Assert.assertEquals(statusCode,200, "Server response code: " + statusCode);
   }
+
+//  /**
+//   * Снятие скриншота
+//    * @param webDriver - экземпляр драйвера
+//   * @return - возвращает массив байтов
+//   */
+//  public byte[] tekeScreenshot(WebDriver webDriver) {
+//    return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+//  }
 }
