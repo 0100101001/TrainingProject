@@ -2,6 +2,8 @@ package base;
 
 import enums.DriverPaths;
 import enums.SiteAddress;
+import io.qameta.atlas.core.Atlas;
+import io.qameta.atlas.webdriver.WebDriverConfiguration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,6 +16,7 @@ import static java.lang.System.setProperty;
 
 public class ApplicationManager {
   protected static WebDriver webDriver;
+  protected static Atlas atlas;
   protected String url;
 
   protected void init() throws IOException {
@@ -46,7 +49,9 @@ public class ApplicationManager {
 
       webDriver = new ChromeDriver();
       webDriver.manage().window().maximize();
+
       webDriver.get(url);
+      atlas = new Atlas(new WebDriverConfiguration(webDriver));
     }
   }
 

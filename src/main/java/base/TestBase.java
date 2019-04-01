@@ -5,7 +5,6 @@ import org.testng.annotations.*;
 
 import java.io.IOException;
 
-
 @Listeners(MyTestListener.class)
 public class TestBase extends ApplicationManager{
 
