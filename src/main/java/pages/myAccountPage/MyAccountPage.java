@@ -1,23 +1,16 @@
 package pages.myAccountPage;
 
-import base.TestBase;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import utility.Waits;
+import io.qameta.atlas.webdriver.AtlasWebElement;
+import io.qameta.atlas.webdriver.WebPage;
+import io.qameta.atlas.webdriver.extension.FindBy;
+import ru.yandex.qatools.allure.annotations.Description;
 
-public class MyAccountPage extends TestBase {
+public interface MyAccountPage extends WebPage {
 
   /**
-   * Аватар
+   *Аватар пользователя
    */
-  @FindBy(xpath = "//div[@class= 'header-main-area']//span[@class='my-account-personal-photo-placeholder']")
-  public WebElement userAvatar;
-
-
-  public MyAccountPage(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    PageFactory.initElements(webDriver,this);
-  }
+  @Description("Аватар пользователя")
+  @FindBy("//div[@class= 'header-main-area']//span[@class='my-account-personal-photo-placeholder']")
+  AtlasWebElement userAvatar();
 }

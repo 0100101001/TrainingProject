@@ -1,17 +1,22 @@
-package loginTests.steps;
+package pages.mainPage;
 
 import base.TestBase;
-import io.qameta.allure.Step;
 import org.testng.Assert;
 import pages.mainPage.MainPage;
+import ru.yandex.qatools.allure.annotations.Step;
 
-public class ActionsOnTheMainPage extends TestBase {
+public class StepsOnTheMainPage extends TestBase {
 
   @Step("Перейти на страницу авторизации пользователя")
   public void goToLoginPage() {
-    MainPage mainPage = new MainPage(webDriver);
+    MainPage mainPage = atlas.create(webDriver, MainPage.class);
+
+    /* Перейти по ссылке "Войти" на страницу авторизации*/
     mainPage.goToLoginPage();
+
+    /* Проверить, что открыта страница авторизации*/
     Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
             "Переход на страницу авторизации не осуществлен");
   }
+
 }

@@ -10,7 +10,7 @@ public class TestBase extends ApplicationManager{
 
   @BeforeMethod
   public void setUp() throws IOException { init();
-    webDriver.navigate().refresh();
+//    webDriver.navigate().refresh();
   }
 
   @AfterMethod

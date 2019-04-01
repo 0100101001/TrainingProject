@@ -1,76 +1,86 @@
 package pages.loginPage;
 
-import base.TestBase;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import io.qameta.atlas.webdriver.AtlasWebElement;
+import io.qameta.atlas.webdriver.WebPage;
+import io.qameta.atlas.webdriver.extension.FindBy;
+import org.openqa.selenium.NoSuchElementException;
 import pages.myAccountPage.MyAccountPage;
-import utility.Waits;
+import pages.popupMsgAndBanner.PopupMsgAndBanner;
+import ru.yandex.qatools.allure.annotations.Description;
 
-public class LoginPage extends TestBase {
+public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
   /**
    * Поле ввода Телефона/Email
    */
-  @FindBy(id = "frm-email")
-  public WebElement inputLogin;
+  @Description("Логин")
+  @FindBy("frm-email")
+  AtlasWebElement inputLogin();
 
   /**
    * Поле ввода пароля
    */
-  @FindBy(id = "frm-password")
-  public WebElement inputPassword;
+  @Description("Пароль")
+  @FindBy("frm-password")
+  AtlasWebElement inputPassword();
 
   /**
    * Кнопка "Продолжить" в форме авторизации
    */
-  @FindBy(name = "loginEmailPhone")
-  public WebElement buttonSubmit;
+  @Description("Кнопка 'Продолжить'")
+  @FindBy("loginEmailPhone")
+  AtlasWebElement buttonSubmit();
 
   /**
    * Сообщение о том, что логин или пароль неверны
    */
-  @FindBy(xpath = "//form[@id='login-form']//div[contains(@class, 'login-notification-error')]")
-  public WebElement messageNotificationError;
+  @Description("Сообщение об ошибке авторизации")
+  @FindBy("//form[@id='login-form']//div[contains(@class, 'login-notification-error')]")
+  AtlasWebElement messageNotificationError();
 
-  public LoginPage(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    PageFactory.initElements(webDriver, this);
-  }
 
   /**
    * Авторизация (заполнение логина, пароля и нажатие на кнопку завершения авторизации)
    * @param login - логин пользователя
    * @param password - пароль
-   * @return - вернет true, усли авторизация прошла(отображается аватар пользователя, иначе вернет false
    */
-  public boolean login(String login, String password) {
-    Waits waits = new Waits();
-    MyAccountPage myAccountPage = new MyAccountPage(webDriver);
-    waits.waitVisibilityOrClickableElement(inputLogin, 10, webDriver);
+  default void login(String login, String password) {
+    closeOverlapLayer(); //закроем баннер, если появился
 
-    inputLogin.click();
-    inputLogin.clear();
-    inputLogin.sendKeys(login);
+    inputLogin().click();
+    inputLogin().clear();
+    inputLogin().sendKeys(login); //ввод логина
 
-    inputPassword.click();
-    inputPassword.clear();
-    inputPassword.sendKeys(password);
+    inputPassword().click();
+    inputPassword().clear();
+    inputPassword().sendKeys(password); //ввод пароля
 
-    buttonSubmit.click();
-    waits.waitForPageLoad(webDriver);
-
-    return waits.waitVisibilityOrClickableElement(myAccountPage.userAvatar, 5, webDriver);
+    buttonSubmit().click(); //нажатие на кнопку завершения авторизации
   }
 
   /**
-   * Проверка отображения сообщения о том, что логин или пароль неверны
-   * @return - результат
+   * Проверка успешной авторизации
+   * @return - удалось авторизоваться?
    */
-  public boolean checkNotificationError() {
-    Waits waits = new Waits();
-    waits.waitForPageLoad(webDriver);
-    return waits.waitVisibilityOrClickableElement(messageNotificationError, 3, webDriver);
+  default boolean loginCheck() {
+    try {
+      return userAvatar().isDisplayed(); //отображается ли аватар пользователя
+    }catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  /**
+   * Проверка нотификации при ошибке авторизации
+   * @return - появилось сообщение об ошибке?
+   */
+  default boolean checkNotificationError() {
+    try {
+      return messageNotificationError().isDisplayed(); //отображается ли сообщение об ошибке
+    }catch (NoSuchElementException e) {
+      return false;
+    }
   }
 }
+
+

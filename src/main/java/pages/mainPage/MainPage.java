@@ -1,41 +1,26 @@
 package pages.mainPage;
 
-import base.TestBase;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import pages.loginPage.LoginPage;
+import io.qameta.atlas.webdriver.AtlasWebElement;
+import io.qameta.atlas.webdriver.WebPage;
+import io.qameta.atlas.webdriver.extension.FindBy;
 import pages.popupMsgAndBanner.PopupMsgAndBanner;
-import utility.Waits;
+import ru.yandex.qatools.allure.annotations.Description;
 
-public class MainPage extends TestBase {
-
-  /**
-   * Ссылка на страницу авторизации
-   */
-  @FindBy(xpath = ".//div[@class='header-main-area']//a[@href='/login']")
-  public WebElement linkToLoginPage;
+public interface MainPage extends WebPage, PopupMsgAndBanner {
 
   /**
-   * Строка поиска (поле ввода)
+   *Ссылка на страницу авторизации "Войти"
    */
-  @FindBy(id = "frm-search-text")
-  public WebElement inputSearch;
-
-  public MainPage(WebDriver webDriver) {
-    this.webDriver = webDriver;
-    PageFactory.initElements(webDriver,this);
-  }
+  @Description("Ссылка на страницу авторизации 'Войти'")
+  @FindBy(".//div[@class='header-main-area']//a[@href='/login']")
+  AtlasWebElement linkToLoginPage();
 
   /**
    * Переход с главной странице по ссылке "Войти" на страницу авторизации
    */
-  public void goToLoginPage() {
-    Waits waits = new Waits();
-    LoginPage loginPage = new LoginPage(webDriver);
-    waits.waitVisibilityOrClickableElement(linkToLoginPage, 15, webDriver);
-    linkToLoginPage.click();
-    waits.waitVisibilityOrClickableElement(loginPage.inputLogin, 20, webDriver);
+  default void goToLoginPage() {
+    closeOverlapLayer(); //закроем баннер, если появился
+
+    linkToLoginPage().click(); //нажмем на ссылку "Войти"
   }
 }
