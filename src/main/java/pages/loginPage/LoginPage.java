@@ -14,21 +14,21 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
    * Поле ввода Телефона/Email
    */
   @Description("Логин")
-  @FindBy("frm-email")
+  @FindBy("//input[@id='frm-email']")
   AtlasWebElement inputLogin();
 
   /**
    * Поле ввода пароля
    */
   @Description("Пароль")
-  @FindBy("frm-password")
+  @FindBy("//input[@id='frm-password']")
   AtlasWebElement inputPassword();
 
   /**
    * Кнопка "Продолжить" в форме авторизации
    */
   @Description("Кнопка 'Продолжить'")
-  @FindBy("loginEmailPhone")
+  @FindBy("//input[@name='loginEmailPhone']")
   AtlasWebElement buttonSubmit();
 
   /**

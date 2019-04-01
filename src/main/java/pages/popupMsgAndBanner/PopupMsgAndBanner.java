@@ -24,8 +24,8 @@ public interface PopupMsgAndBanner extends WebPage {
       if (overlapLayer().isDisplayed()) { //если отображается, то закроем
         overlapLayer().click();
       }
-    } catch (NoSuchElementException ignored) {
-
+    } catch (NoSuchElementException e) {
+        System.out.println("Баннер не появился");
     }
   }
 }
