@@ -35,6 +35,7 @@ public class ApplicationManager {
         webDriver = new FirefoxDriver();
         webDriver.manage().window().maximize();
         webDriver.get(url);
+        atlas = new Atlas(new WebDriverConfiguration(webDriver));
 
       } else if (getProperty("browser").contains("hrome") || getProperty("browser").contains("oogle")) {
         setProperty("webdriver.chrome.driver", DriverPaths.chrome.value);
@@ -42,7 +43,7 @@ public class ApplicationManager {
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.get(url);
-
+        atlas = new Atlas(new WebDriverConfiguration(webDriver));
       }
     } catch (NullPointerException e) {
       setProperty("webdriver.chrome.driver", DriverPaths.chrome.value);

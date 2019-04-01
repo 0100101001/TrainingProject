@@ -17,10 +17,10 @@ public class LoginTest extends StepsLoginTest {
 
     if(login.equals(LoginAndPassword.autotestuserFail.name())) {
       /* Авторизуемся пользователем (некорректные данные)*/
-      stepsLoginTest.login(login, password, "Некорректные данные");
+      stepsLoginTest.login(login, password);
     }else {
       /* Авторизуемся пользователем (корректные данные)*/
-      stepsLoginTest.login(login, password);
+      stepsLoginTest.loginIncorrectData(login, password);
     }
   }
 }

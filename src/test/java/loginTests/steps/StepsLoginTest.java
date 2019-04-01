@@ -24,15 +24,15 @@ public class StepsLoginTest extends TestBase {
             "Авторизоваться не удалось");
   }
 
-  @Step("Авторизация ({2})")
-  public void login(String login, String password, String typeLogin) {
+  @Step("Авторизация (некорректные данные)")
+  public void loginIncorrectData(String login, String password) {
     LoginPage loginPage = new LoginPage(webDriver);
 
     Assert.assertFalse(loginPage.login(login, password),
             "Пользователь "+login+" авторизовался");
 
     Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
-            "Переход на страницу авторизации не осуществлен");
+            "Пользователь не остался на странице авторизации");
 
     Assert.assertTrue(loginPage.checkNotificationError(), "Сообщение об ошибке не отображается!");
   }
