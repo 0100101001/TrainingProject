@@ -30,6 +30,11 @@ public class Utility {
     Assert.assertEquals(statusCode,200, "Server response code: " + statusCode);
   }
 
+  /**
+   * Получение свойств из файла application.properties
+   * @param keyProperty - ключ свойства
+   * @return - значение свойства
+   */
   public String getProperties(String keyProperty) {
     String property;
 
@@ -40,19 +45,19 @@ public class Utility {
       e.printStackTrace();
     }
     Properties properties = new Properties();
-    Reader PropReader = null;
+    Reader propReader = null;
 
     try {
-      PropReader = Files.newBufferedReader(propertyFile);
-      properties.load(PropReader);
+      propReader = Files.newBufferedReader(propertyFile);
+      properties.load(propReader);
     } catch (IOException e) {
       e.printStackTrace();
     }
     property = properties.getProperty(keyProperty);
 
     try {
-      if (PropReader != null) {
-        PropReader.close();
+      if (propReader != null) {
+        propReader.close();
       }
     } catch (IOException e) {
       e.printStackTrace();

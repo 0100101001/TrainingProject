@@ -8,35 +8,15 @@ public class LoginAndPassword {
   Utility utility = new Utility();
 
   /* Корректные логин и пароль*/
-  private String login = utility.getProperties("UserLogin");
-  private String password = utility.getProperties("UserPassword");
+  private String login = utility.getProperties("user.login");
+  private String password = utility.getProperties("user.password");
 
   /* Некорректные логин и пароль для негативного теста */
-  private String invalidLogin = utility.getProperties("UserLoginInvalid");
-  private String invalidPassword = utility.getProperties("UserPasswordInvalid");
+  private String invalidLogin = utility.getProperties("user.login.invalid");
+  private String invalidPassword = utility.getProperties("user.password.invalid");
 
   public LoginAndPassword() throws IOException {
   }
-
-
-//  private Properties getProperties() {
-//    Path propertyFile = Paths.get("src/test/resources/application.properties");
-//    try {
-//      Files.lines(propertyFile, Charset.forName("UTF-8"));
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//    Properties properties = new Properties();
-//    Reader PropReader;
-//
-//      try {
-//        PropReader = Files.newBufferedReader(propertyFile);
-//        properties.load(PropReader);
-//      } catch (IOException e) {
-//        e.printStackTrace();
-//      }
-//    return properties;
-//  }
 
   public String getLogin() {
     return login;
