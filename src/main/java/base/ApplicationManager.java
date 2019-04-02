@@ -53,6 +53,7 @@ public class ApplicationManager {
 
       webDriver.get(url);
       atlas = new Atlas(new WebDriverConfiguration(webDriver));
+
     }
   }
 
