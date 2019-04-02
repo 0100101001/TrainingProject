@@ -2,7 +2,6 @@ package pages.mainPage;
 
 import base.TestBase;
 import org.testng.Assert;
-import pages.mainPage.MainPage;
 import ru.yandex.qatools.allure.annotations.Step;
 
 public class StepsOnTheMainPage extends TestBase {

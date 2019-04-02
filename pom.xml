@@ -91,11 +91,12 @@
                 <version>2.22.0</version>
 
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${basedir}\src\test\java\suiteFiles\test.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <skipTests>false</skipTests>
+                    <!--<suiteXmlFiles>-->
+                        <!--<suiteXmlFile>${basedir}\src\test\java\suiteFiles\test.xml</suiteXmlFile>-->
+                    <!--</suiteXmlFiles>-->
                     <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
 
                     <systemProperties>
