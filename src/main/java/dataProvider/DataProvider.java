@@ -1,13 +1,15 @@
 package dataProvider;
 
-import enums.LoginAndPassword;
+import testData.users.LoginAndPassword;
 
 public class DataProvider {
 
   @org.testng.annotations.DataProvider(name="login")
   public static Object[][] getTypeOfLogin() {
-    return new Object[][] { {LoginAndPassword.login.value, LoginAndPassword.password.value},
-            {LoginAndPassword.autotestuserFail.name(), LoginAndPassword.autotestuserFail.value }
+    LoginAndPassword loginAndPassword = new LoginAndPassword();
+
+    return new Object[][] { {loginAndPassword.getLogin(), loginAndPassword.getPassword()},
+            {loginAndPassword.getInvalidLogin(), loginAndPassword.getInvalidPassword() }
     };
 
   }
