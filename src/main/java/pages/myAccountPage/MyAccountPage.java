@@ -7,10 +7,10 @@ import ru.yandex.qatools.allure.annotations.Description;
 
 public interface MyAccountPage extends WebPage {
 
-  /**
-   *Аватар пользователя
-   */
-  @Description("Аватар пользователя")
-  @FindBy("//div[@class= 'header-main-area']//span[@class='my-account-personal-photo-placeholder']")
-  AtlasWebElement userAvatar();
+    /**
+     * Аватар пользователя
+     */
+    @Description("Аватар пользователя")
+    @FindBy("//div[@class= 'header-main-area']//span[@class='my-account-personal-photo-placeholder']")
+    AtlasWebElement userAvatar();
 }
