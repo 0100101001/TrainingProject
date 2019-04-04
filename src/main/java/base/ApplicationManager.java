@@ -34,6 +34,7 @@ public class ApplicationManager {
 
                 webDriver = new FirefoxDriver();
                 webDriver.manage().window().maximize();
+
                 webDriver.get(url);
                 atlas = new Atlas(new WebDriverConfiguration(webDriver));
 
@@ -42,6 +43,7 @@ public class ApplicationManager {
 
                 webDriver = new ChromeDriver();
                 webDriver.manage().window().maximize();
+
                 webDriver.get(url);
                 atlas = new Atlas(new WebDriverConfiguration(webDriver));
             }
@@ -58,6 +60,8 @@ public class ApplicationManager {
     }
 
     protected void stop() {
-        webDriver.quit();
+        if (webDriver != null) {
+            webDriver.quit();
+        }
     }
 }
