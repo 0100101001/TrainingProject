@@ -12,7 +12,6 @@ public class StepsOnTheLoginPage extends TestBase {
 
         /* Заполнить форму авторизации, нажать кнопку завершения авторизации */
         loginPage.login(login, password);
-
     }
 
     @Step("Авторизация пользователем {0} (некорректные данные)")
@@ -21,15 +20,6 @@ public class StepsOnTheLoginPage extends TestBase {
 
         /* Заполнить форму авторизации, нажать кнопку завершения авторизации */
         loginPage.login(login, password);
-
-    }
-
-    @Step("Проверить, что авторизация успешна")
-    public void checkSuccessfulLogin() {
-        LoginPage loginPage = atlas.create(webDriver, LoginPage.class);
-
-        /* Проверить, что авторизация успешна*/
-        Assert.assertTrue(loginPage.loginCheck(), "Авторизация не произведена");
     }
 
     @Step("Проверить, что авторизация не удалась")
@@ -43,5 +33,4 @@ public class StepsOnTheLoginPage extends TestBase {
         /* Проверить, что сообщение об ошибке отображается */
         Assert.assertTrue(loginPage.checkNotificationError(), "Сообщение об ошибке не отображается!");
     }
-
 }
