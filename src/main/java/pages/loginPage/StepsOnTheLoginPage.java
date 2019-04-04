@@ -6,7 +6,7 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 public class StepsOnTheLoginPage extends TestBase {
 
-    @Step("Авторизоваться пользователем {login}")
+    @Step("Авторизоваться пользователем {0}")
     public void login(String login, String password) {
         LoginPage loginPage = atlas.create(webDriver, LoginPage.class);
 
@@ -17,7 +17,7 @@ public class StepsOnTheLoginPage extends TestBase {
         Assert.assertTrue(loginPage.loginCheck(), "Авторизация не произведена");
     }
 
-    @Step("Авторизация пользователем {login} (некорректные данные)")
+    @Step("Авторизация пользователем {0} (некорректные данные)")
     public void loginIncorrectData(String login, String password) {
         LoginPage loginPage = atlas.create(webDriver, LoginPage.class);
 
