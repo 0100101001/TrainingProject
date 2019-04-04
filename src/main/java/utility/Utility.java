@@ -67,12 +67,4 @@ public class Utility {
         return property;
     }
 
-//  /**
-//   * Снятие скриншота
-//    * @param webDriver - экземпляр драйвера
-//   * @return - возвращает массив байтов
-//   */
-//  public byte[] tekeScreenshot(WebDriver webDriver) {
-//    return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
-//  }
 }

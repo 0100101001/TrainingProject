@@ -24,9 +24,15 @@ public class TestLogin extends TestBase {
         if (login.equals(loginAndPassword.getInvalidLogin())) {
             /* Авторизуемся пользователем (некорректные данные)*/
             stepsOnTheLoginPage.loginIncorrectData(login, password);
+
+            /* Проверить, что авторизация не удалась */
+            stepsOnTheLoginPage.checkErrorlLogin();
         } else {
             /* Авторизуемся пользователем (корректные данные)*/
             stepsOnTheLoginPage.login(login, password);
+
+            /* Проверить, что авторизация успешна */
+            stepsOnTheLoginPage.checkSuccessfulLogin();
         }
 
     }
