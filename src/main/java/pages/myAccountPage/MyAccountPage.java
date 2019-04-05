@@ -4,6 +4,7 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Description;
 
 public interface MyAccountPage extends WebPage {
@@ -17,14 +18,8 @@ public interface MyAccountPage extends WebPage {
 
     /**
      * Проверка успешной авторизации
-     *
-     * @return - удалось авторизоваться?
      */
-    default boolean loginCheck() {
-        try {
-            return userAvatar().isDisplayed(); //отображается ли аватар пользователя
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    default void loginCheck() {
+        Assert.assertTrue(userAvatar().isDisplayed(), "Аватар пользователя не отображается");
     }
 }

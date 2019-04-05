@@ -19,7 +19,7 @@ public class ApplicationManager {
     protected static Atlas atlas;
     public static String url;
 
-    protected void init() throws IOException {
+    public void init() throws IOException {
 
         url = SiteAddress.addressMainPage.value;
 
@@ -35,7 +35,7 @@ public class ApplicationManager {
                 webDriver = new FirefoxDriver();
                 webDriver.manage().window().maximize();
 
-                webDriver.get(url);
+//                webDriver.get(url);
                 atlas = new Atlas(new WebDriverConfiguration(webDriver));
 
             } else if (getProperty("browser").contains("hrome") || getProperty("browser").contains("oogle")) {
@@ -44,7 +44,7 @@ public class ApplicationManager {
                 webDriver = new ChromeDriver();
                 webDriver.manage().window().maximize();
 
-                webDriver.get(url);
+//                webDriver.get(url);
                 atlas = new Atlas(new WebDriverConfiguration(webDriver));
             }
         } catch (NullPointerException e) {
@@ -53,13 +53,13 @@ public class ApplicationManager {
             webDriver = new ChromeDriver();
             webDriver.manage().window().maximize();
 
-            webDriver.get(url);
+//            webDriver.get(url);
             atlas = new Atlas(new WebDriverConfiguration(webDriver));
 
         }
     }
 
-    protected void stop() {
+    public void stop() {
         if (webDriver != null) {
             webDriver.quit();
         }

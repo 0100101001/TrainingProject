@@ -46,55 +46,50 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
 
     /**
-     * Авторизация (заполнение логина, пароля и нажатие на кнопку завершения авторизации)
-     *
-     * @param login    - логин пользователя
+     * Ввод пароля
      * @param password - пароль
      */
-    default void login(String login, String password) {
-        closeOverlapLayer(); //закроем баннер, если появился
-
-        inputLogin().click();
-        inputLogin().clear();
-        inputLogin().sendKeys(login); //ввод логина
-
-        inputPassword().click();
+    default void inputPassword(String password) {
         inputPassword().clear();
         inputPassword().sendKeys(password); //ввод пароля
-
-        buttonSubmit().click(); //нажатие на кнопку завершения авторизации
     }
 
     /**
-     * Проверка успешной авторизации
-     *
-     * @return - удалось авторизоваться?
+     * Нажать на кнопку завершения авторизации
      */
-    default boolean loginCheck() {
-        try {
-            return userAvatar().isDisplayed(); //отображается ли аватар пользователя
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    default void pressSubmitButton() {
+        buttonSubmit().click();
+    }
+
+    /**
+     *  Ввод логина
+     * @param login - логин пользователя
+     */
+    default void inputLogin(String login) {
+        inputLogin().clear();
+        inputLogin().sendKeys(login); //ввод логина
     }
 
     /**
      * Проверка нотификации при ошибке авторизации
-     *
-     * @return - появилось сообщение об ошибке?
      */
-    default boolean checkNotificationError() {
-        try {
-            return messageNotificationError().isDisplayed(); //отображается ли сообщение об ошибке
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    default void checkNotificationError() {
+        Assert.assertTrue(messageNotificationError().isDisplayed(), "Сообщение об ошибке не отображается");
     }
 
+    /**
+     * Проверить, что открыта страница авторизации
+     */
     default void checkThatTheLoginPageIsOpen(){
-        /* Проверить, что открыта страница авторизации*/
         Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
                 "Переход на страницу авторизации не осуществлен");
+    }
+
+    /**
+     * Проверить, что отображается форма авторизации
+     */
+    default void verifyThatTheLoginformIsDisplayed() {
+        Assert.assertTrue(formLogin().isDisplayed(), "Форма авторизации не отображается");
     }
 }
 

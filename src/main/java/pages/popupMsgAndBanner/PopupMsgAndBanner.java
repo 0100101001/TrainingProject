@@ -12,7 +12,7 @@ public interface PopupMsgAndBanner extends WebPage {
     /**
      * Перекрывающий блок, при появлении баннера или всплывающего сообщения
      */
-    @Retry(timeout = 2000)
+    @Retry(timeout = 1000)
     @Description("Перекрывающий блок")
     @FindBy("//div[@class='flocktory-widget-overlay' and @data-vivaldi-spatnav-clickable='1']")
     AtlasWebElement overlapLayer();

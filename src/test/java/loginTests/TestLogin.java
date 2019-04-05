@@ -5,7 +5,6 @@ import dataProvider.DataProvider;
 import org.testng.annotations.Test;
 import pages.PageObject;
 import pages.loginPage.LoginPage;
-import pages.loginPage.StepsOnTheLoginPage;
 import pages.mainPage.MainPage;
 import pages.mainPage.StepsOnTheMainPage;
 import testData.users.LoginAndPassword;
@@ -22,33 +21,31 @@ public class TestLogin extends TestBase {
         String password = loginAndPassword.password;
 
         // Перейти на сайт
-        webDriver.get(url);
+        onSite().openSite();
 
         // Перейти на страницу авторизации
-        onSite().onMainPage().linkToLoginPage().click();
+        onSite().onMainPage().goToLoginPage();
 
         // Проверить, что открыта страница авторизации
         onSite().onLoginPage().checkThatTheLoginPageIsOpen();
 
         // Проверить, что отображается форма авторизации
-        onSite().onLoginPage().formLogin().isDisplayed();
+        onSite().onLoginPage().verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
-        onSite().onLoginPage().inputLogin().sendKeys(login);
+        onSite().onLoginPage().inputLogin(login);
 
         // Ввести пароль
-        onSite().onLoginPage().inputPassword().sendKeys(password);
+        onSite().onLoginPage().inputPassword(password);
 
         // Нажать кнопку завершения авторизации
-        onSite().onLoginPage().buttonSubmit().click();
+        onSite().onLoginPage().pressSubmitButton();
 
         // Проверить, что авторизация успешна, отображается аватар пользователя
-        onSite().onMyAccountPage().userAvatar().isDisplayed();
+        onSite().onMyAccountPage().loginCheck();
     }
 
     private PageObject onSite() {
-
         return atlas.create(webDriver, PageObject.class);
-
     }
 }
