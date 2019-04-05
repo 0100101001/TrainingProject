@@ -3,37 +3,52 @@ package loginTests;
 import base.TestBase;
 import dataProvider.DataProvider;
 import org.testng.annotations.Test;
+import pages.PageObject;
+import pages.loginPage.LoginPage;
 import pages.loginPage.StepsOnTheLoginPage;
+import pages.mainPage.MainPage;
 import pages.mainPage.StepsOnTheMainPage;
 import testData.users.LoginAndPassword;
 
 import java.io.IOException;
 
 public class TestLogin extends TestBase {
-    protected StepsOnTheMainPage stepsOnTheMainPage = new StepsOnTheMainPage();
-    protected StepsOnTheLoginPage stepsOnTheLoginPage = new StepsOnTheLoginPage();
 
-    @Test(description = "Авторизация", dataProvider = "login", dataProviderClass = DataProvider.class)
-    public void loginTests(String login, String password) throws IOException {
+    @Test(description = "Проверка успешной авторизации")
+    public void SuccessfulLoginTest() {
         LoginAndPassword loginAndPassword = new LoginAndPassword();
 
-        /* Перейдем на страницу авторизации */
-        stepsOnTheMainPage.goToLoginPage();
+        String login = loginAndPassword.login;
+        String password = loginAndPassword.password;
 
-        /* Авторизуемся пользователем*/
-        if (login.equals(loginAndPassword.getInvalidLogin())) {
-            /* Авторизуемся пользователем (некорректные данные)*/
-            stepsOnTheLoginPage.loginIncorrectData(login, password);
+        // Перейти на сайт
+        webDriver.get(url);
 
-            /* Проверить, что авторизация не удалась */
-            stepsOnTheLoginPage.checkErrorlLogin();
-        } else {
-            /* Авторизуемся пользователем (корректные данные)*/
-            stepsOnTheLoginPage.login(login, password);
+        // Перейти на страницу авторизации
+        onSite().onMainPage().linkToLoginPage().click();
 
-            /* Проверить, что авторизация успешна */
-            stepsOnTheLoginPage.checkSuccessfulLogin();
-        }
+        // Проверить, что открыта страница авторизации
+        onSite().onLoginPage().checkThatTheLoginPageIsOpen();
+
+        // Проверить, что отображается форма авторизации
+        onSite().onLoginPage().formLogin().isDisplayed();
+
+        // Ввести логин
+        onSite().onLoginPage().inputLogin().sendKeys(login);
+
+        // Ввести пароль
+        onSite().onLoginPage().inputPassword().sendKeys(password);
+
+        // Нажать кнопку завершения авторизации
+        onSite().onLoginPage().buttonSubmit().click();
+
+        // Проверить, что авторизация успешна, отображается аватар пользователя
+        onSite().onMyAccountPage().userAvatar().isDisplayed();
+    }
+
+    private PageObject onSite() {
+
+        return atlas.create(webDriver, PageObject.class);
 
     }
 }

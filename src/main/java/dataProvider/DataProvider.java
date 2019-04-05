@@ -10,8 +10,8 @@ public class DataProvider {
     public static Object[][] getTypeOfLogin() throws IOException {
         LoginAndPassword loginAndPassword = new LoginAndPassword();
 
-        return new Object[][]{{loginAndPassword.getLogin(), loginAndPassword.getPassword()},
-                {loginAndPassword.getInvalidLogin(), loginAndPassword.getInvalidPassword()}
+        return new Object[][]{{loginAndPassword.login, loginAndPassword.password},
+                {loginAndPassword.invalidLogin, loginAndPassword.invalidPassword}
         };
 
     }

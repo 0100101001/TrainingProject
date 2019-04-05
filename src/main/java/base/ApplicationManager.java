@@ -15,9 +15,9 @@ import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 
 public class ApplicationManager {
-    protected static WebDriver webDriver;
+    public static WebDriver webDriver;
     protected static Atlas atlas;
-    protected String url;
+    public static String url;
 
     protected void init() throws IOException {
 

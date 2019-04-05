@@ -11,8 +11,8 @@ public class StepsOnTheLoginPage extends TestBase {
         LoginPage loginPage = atlas.create(webDriver, LoginPage.class);
 
         /* Заполнить форму авторизации, нажать кнопку завершения авторизации */
-        loginPage.login(login, password);
-
+//        loginPage.login(login, password);
+        loginPage.inputPassword().sendKeys("123");
     }
 
     @Step("Авторизация пользователем {0} (некорректные данные)")
