@@ -5,12 +5,9 @@ import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.testng.Assert;
 import pages.myAccountPage.MyAccountPage;
 import pages.popupMsgAndBanner.PopupMsgAndBanner;
 import ru.yandex.qatools.allure.annotations.Description;
-
-import static base.ApplicationManager.webDriver;
 
 public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
@@ -69,24 +66,6 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
         buttonSubmit().click(); //нажатие на кнопку завершения авторизации
     }
-
-    default void checkThatTheLoginPageIsOpen() {
-        /* Проверить, что открыта страница авторизации*/
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
-                "Переход на страницу авторизации не осуществлен");
-    }
-
-//    default void inputLogin(String login) {
-//        inputLogin().clear();
-//        inputLogin().sendKeys(login);
-//    }
-//
-//    default void inputPassword(String password) {
-//        inputLogin().clear();
-//        inputLogin().sendKeys(password);
-//    }
-
-
 
     /**
      * Проверка успешной авторизации
