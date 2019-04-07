@@ -81,7 +81,7 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
      * Проверить, что открыта страница авторизации
      */
     default void checkThatTheLoginPageIsOpen(){
-        Assert.assertTrue(webDriver.getCurrentUrl().contains("/login"),
+        Assert.assertTrue(getWrappedDriver().getCurrentUrl().contains("/login"),
                 "Переход на страницу авторизации не осуществлен");
     }
 

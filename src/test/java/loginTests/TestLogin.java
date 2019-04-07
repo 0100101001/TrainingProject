@@ -4,9 +4,6 @@ import base.TestBase;
 import dataProvider.DataProvider;
 import org.testng.annotations.Test;
 import pages.PageObject;
-import pages.loginPage.LoginPage;
-import pages.mainPage.MainPage;
-import pages.mainPage.StepsOnTheMainPage;
 import testData.users.LoginAndPassword;
 
 import java.io.IOException;
@@ -24,25 +21,25 @@ public class TestLogin extends TestBase {
         onSite().openSite();
 
         // Перейти на страницу авторизации
-        onSite().onMainPage().goToLoginPage();
+        onSite().onHeader.goToLoginPage();
 
         // Проверить, что открыта страница авторизации
-        onSite().onLoginPage().checkThatTheLoginPageIsOpen();
+        onSite().onLoginPage.checkThatTheLoginPageIsOpen();
 
         // Проверить, что отображается форма авторизации
-        onSite().onLoginPage().verifyThatTheLoginformIsDisplayed();
+        onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
-        onSite().onLoginPage().inputLogin(login);
+        onSite().onLoginPage.inputLogin(login);
 
         // Ввести пароль
-        onSite().onLoginPage().inputPassword(password);
+        onSite().onLoginPage.inputPassword(password);
 
         // Нажать кнопку завершения авторизации
-        onSite().onLoginPage().pressSubmitButton();
+        onSite().onLoginPage.pressSubmitButton();
 
         // Проверить, что авторизация успешна, отображается аватар пользователя
-        onSite().onMyAccountPage().loginCheck();
+        onSite().onMyAccountPage.loginCheck();
     }
 
     @Test(description = "Проверка авторизации с некорректными данными")
@@ -56,26 +53,27 @@ public class TestLogin extends TestBase {
         onSite().openSite();
 
         // Перейти на страницу авторизации
-        onSite().onMainPage().goToLoginPage();
+        onSite().onHeader.goToLoginPage();
 
         // Проверить, что открыта страница авторизации
-        onSite().onLoginPage().checkThatTheLoginPageIsOpen();
+        onSite().onLoginPage.checkThatTheLoginPageIsOpen();
 
         // Проверить, что отображается форма авторизации
-        onSite().onLoginPage().verifyThatTheLoginformIsDisplayed();
+        onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
-        onSite().onLoginPage().inputLogin(login);
+        onSite().onLoginPage.inputLogin(login);
 
         // Ввести пароль
-        onSite().onLoginPage().inputPassword(password);
+        onSite().onLoginPage.inputPassword(password);
 
         // Нажать кнопку завершения авторизации
-        onSite().onLoginPage().pressSubmitButton();
+        onSite().onLoginPage.pressSubmitButton();
 
         // Проверить, что авторизация не удалась - отображается сообщение об ошибке
-        onSite().onLoginPage().checkNotificationError();
+        onSite().onLoginPage.checkNotificationError();
     }
+
     private PageObject onSite() {
         return atlas.create(webDriver, PageObject.class);
     }

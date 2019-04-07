@@ -16,7 +16,7 @@ import static java.lang.System.setProperty;
 
 public class ApplicationManager {
     public static WebDriver webDriver;
-    protected static Atlas atlas;
+    public static Atlas atlas;
     public static String url;
 
     public void init() throws IOException {
