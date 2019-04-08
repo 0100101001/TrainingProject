@@ -2,34 +2,40 @@ package base;
 
 import org.aeonbits.owner.Config;
 
-@Config.LoadPolicy(Config.LoadType.MERGE)
+import java.io.PrintStream;
+
+//@Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({"file:config/project.properties", "file:config/credentials.properties"})
 
 public interface Configuration extends Config {
 
     @DefaultValue("www.mvideo.ru")
     @Key("site.domain")
-    public String siteDomain();
+    String siteDomain();
 
     @DefaultValue("https://www.mvideo.ru")
     @Key("site.url")
-    public String siteUrl();
+    String siteUrl();
 
     @DefaultValue("Chrome")
     @Key("browser")
-    public String browser();
+    String browser();
 
+    @DefaultValue("YourLogin")
     @Key("user.login")
-    public String userLogin();
+    String userLogin();
 
+    @DefaultValue("YourPassword")
     @Key("user.password")
-    public String userPassword();
+    String userPassword();
 
+    @DefaultValue("autotestuserFail")
     @Key("user.login.invalid")
-    public String userLoginInvalid();
+    String userLoginInvalid();
 
+    @DefaultValue("12345678")
     @Key("user.password.invalid")
-    public String userPasswordInvalid();
+    String userPasswordInvalid();
 
-
+    void list(PrintStream out);
 }

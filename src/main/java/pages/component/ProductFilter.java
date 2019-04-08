@@ -8,13 +8,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.plp.Plp;
 import ru.yandex.qatools.allure.annotations.Description;
-
-import java.util.Arrays;
+import utility.ActionsOnElements;
 
 public interface ProductFilter extends AtlasWebElement, Plp {
 
     @Description("Фильтр {{ nameFaset }}")
-    @FindBy(".//form[@class='c-plp-facets c-plp-facets_without-clear-btn']" +
+    @FindBy(".//form[contains(@class, 'c-plp-facets')]" +
             "//span[@data-toggle='collapse' and contains(string(), '{{ nameFaset }}')]")
     AtlasWebElement faset(@Param("nameFaset") String nameFaset);
 
@@ -44,13 +43,16 @@ public interface ProductFilter extends AtlasWebElement, Plp {
      * @param nameFaset  - название фасета
      * @param nameFilter - название фильтра
      */
-    default void toSetTheFilterInFaset(String nameFaset, String nameFilter) {
+    default void toSetTheFilterInFaset(String nameFaset, String nameFilter) throws InterruptedException {
+        ActionsOnElements actions = new ActionsOnElements();
+        actions.scrollToElement(faset(nameFaset), getWrappedDriver());
+
         if (faset(nameFaset).getAttribute("class").contains("collapsed")) {
             faset(nameFaset).click();
         }
+        getWrappedDriver().navigate().refresh();
         if (!gettingFilterStatus(nameFaset, nameFilter)) {
             filter(nameFaset, nameFilter).click();
-            System.out.println("Выбрал фильтр:" + nameFilter);
             waitForTheFilter();
         }
     }
@@ -62,9 +64,13 @@ public interface ProductFilter extends AtlasWebElement, Plp {
      * @param nameFilter - название фильтра
      */
     default void removeTheFilterInFaset(String nameFaset, String nameFilter) {
+        ActionsOnElements actions = new ActionsOnElements();
+        actions.scrollToElement(faset(nameFaset), getWrappedDriver());
+
         if (faset(nameFaset).getAttribute("class").contains("collapsed")) {
             faset(nameFaset).click();
         }
+        getWrappedDriver().navigate().refresh();
         if (gettingFilterStatus(nameFaset, nameFilter)) {
             filter(nameFaset, nameFilter).click();
             waitForTheFilter();
@@ -86,12 +92,13 @@ public interface ProductFilter extends AtlasWebElement, Plp {
      * @param nameFilter - название фильтра
      */
     default void isTheNumberOfItemsInTheFilterAndTheHeaderTheSame(String nameFaset, String nameFilter) {
-        String inFilter = plpHeadingTitle().getText().replaceAll(Arrays.toString(plpHeadingTitle()
-                .getText().split("\\b[0-9]+\\b")), "");
+        String inFilter = plpHeadingTitle().getText();/*.replaceAll(Arrays.toString(plpHeadingTitle()
+                .getText().split("\\b[0-9]+\\b")), "");*/
 
         String inTitle = filter(nameFaset, nameFilter).getText();
 
-        Assert.assertEquals(inTitle, inFilter, "Количество товаров в фильтре и заголовке не совпадает");
+        Assert.assertTrue(plpHeadingTitle().getText().contains(filter(nameFaset, nameFilter).getText()), "Количество товаров в фильтре и заголовке не совпадает: "
+                + inFilter + " / " + inTitle);
     }
 
     /**
