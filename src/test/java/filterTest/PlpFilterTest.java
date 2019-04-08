@@ -1,27 +1,24 @@
 package filterTest;
 
-import base.TestBase;
-import org.openqa.selenium.WebElement;
+import base.WebTestRunner;
 import org.testng.annotations.Test;
 import pages.PageObject;
 
-import java.awt.event.ItemEvent;
-
-public class PlpFilterTest extends TestBase {
+public class PlpFilterTest extends WebTestRunner {
 
 
     @Test(description = "Проверка работы фильтра по категории и бренду")
     public void filterByCategoryAndBrandTest() throws InterruptedException {
 
         // Перейти на сайт
-        onSite().openSite();
+        goToWebsite();
 
         // Проверить, что навигационное меню отображается
         onSite().onHeader.checkNavMenuIsDisplayed();
 
         // Навести на раздел "Телевизоры" навигационного меню
         onSite().onHeader.hoverOverNavMenuSection("Телевизоры");
-//        Thread.sleep(3000);
+
         // Нажать на пункт "Все телевизоры" подраздела "Телевизоры"
         onSite().onHeader.hoverAndClickOverASubsectionItemInTheNavMenu("Все телевизоры");
 

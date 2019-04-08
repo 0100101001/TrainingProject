@@ -1,11 +1,6 @@
 package pages;
 
-import base.ApplicationManager;
 import io.qameta.atlas.webdriver.WebSite;
-import io.qameta.atlas.webdriver.extension.Page;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import pages.component.Header;
 import pages.component.ProductFilter;
 import pages.loginPage.LoginPage;
@@ -14,9 +9,8 @@ import pages.myAccountPage.MyAccountPage;
 import pages.plp.Plp;
 import pages.popupMsgAndBanner.PopupMsgAndBanner;
 
-import java.io.IOException;
-
-import static base.ApplicationManager.*;
+import static base.ApplicationManager.atlas;
+import static base.ApplicationManager.webDriver;
 
 public interface PageObject extends WebSite {
 
@@ -40,7 +34,4 @@ public interface PageObject extends WebSite {
     Plp onPlp = atlas.create(webDriver, Plp.class);
     ProductFilter onProductFilter = atlas.create(webDriver, ProductFilter.class);
 
-    default void openSite() {
-        webDriver.get(url);
-    }
 }

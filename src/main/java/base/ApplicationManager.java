@@ -1,62 +1,40 @@
 package base;
 
 import enums.DriverPaths;
-import enums.SiteAddress;
 import io.qameta.atlas.core.Atlas;
 import io.qameta.atlas.webdriver.WebDriverConfiguration;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import utility.Utility;
 
 import java.io.IOException;
 
-import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 
 public class ApplicationManager {
     public static WebDriver webDriver;
     public static Atlas atlas;
-    public static String url;
+    private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties());
 
     public void init() throws IOException {
 
-        url = SiteAddress.addressMainPage.value;
-
-        /* Проверим код ответа сервера */
-        Utility utility = new Utility();
-        utility.getStatusCodeOfServer(url);
-
-        /* Инициализация браузера */
         try {
-            if (getProperty("browser").contains("irefox")) {
-                setProperty("webdriver.gecko.driver", DriverPaths.firefox.value);
-
-                webDriver = new FirefoxDriver();
-                webDriver.manage().window().maximize();
-
-//                webDriver.get(url);
-                atlas = new Atlas(new WebDriverConfiguration(webDriver));
-
-            } else if (getProperty("browser").contains("hrome") || getProperty("browser").contains("oogle")) {
+            if (configuration.browser().contains("hrome")) {
                 setProperty("webdriver.chrome.driver", DriverPaths.chrome.value);
-
                 webDriver = new ChromeDriver();
-                webDriver.manage().window().maximize();
-
-//                webDriver.get(url);
-                atlas = new Atlas(new WebDriverConfiguration(webDriver));
+            } else if (configuration.browser().contains("irefox")) {
+                setProperty("webdriver.gecko.driver", DriverPaths.firefox.value);
+                webDriver = new FirefoxDriver();
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) { // если в свойствах проекта не указан браузер
             setProperty("webdriver.chrome.driver", DriverPaths.chrome.value);
-
             webDriver = new ChromeDriver();
-            webDriver.manage().window().maximize();
-
-//            webDriver.get(url);
-            atlas = new Atlas(new WebDriverConfiguration(webDriver));
-
         }
+        webDriver.manage().window().maximize();
+
+        atlas = new Atlas(new WebDriverConfiguration(webDriver));
+
     }
 
     public void stop() {

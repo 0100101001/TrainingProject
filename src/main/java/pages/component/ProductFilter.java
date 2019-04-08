@@ -9,6 +9,8 @@ import org.testng.Assert;
 import pages.plp.Plp;
 import ru.yandex.qatools.allure.annotations.Description;
 
+import java.util.Arrays;
+
 public interface ProductFilter extends AtlasWebElement, Plp {
 
     @Description("Фильтр {{ nameFaset }}")
@@ -38,7 +40,8 @@ public interface ProductFilter extends AtlasWebElement, Plp {
 
     /**
      * Выбрать фильтр nameFilter в фасете nameFaset
-     * @param nameFaset - название фасета
+     *
+     * @param nameFaset  - название фасета
      * @param nameFilter - название фильтра
      */
     default void toSetTheFilterInFaset(String nameFaset, String nameFilter) {
@@ -47,13 +50,15 @@ public interface ProductFilter extends AtlasWebElement, Plp {
         }
         if (!gettingFilterStatus(nameFaset, nameFilter)) {
             filter(nameFaset, nameFilter).click();
+            System.out.println("Выбрал фильтр:" + nameFilter);
             waitForTheFilter();
         }
     }
 
     /**
      * Снять выбор фильтра в фасете
-     * @param nameFaset - название фасета
+     *
+     * @param nameFaset  - название фасета
      * @param nameFilter - название фильтра
      */
     default void removeTheFilterInFaset(String nameFaset, String nameFilter) {
@@ -74,21 +79,30 @@ public interface ProductFilter extends AtlasWebElement, Plp {
                 .until(ExpectedConditions.not(ExpectedConditions.urlToBe(getWrappedDriver().getCurrentUrl())));
     }
 
+    /**
+     * Проверка, совпадает ли количество товаров в фильтре и заголовке
+     *
+     * @param nameFaset  - название фасета
+     * @param nameFilter - название фильтра
+     */
     default void isTheNumberOfItemsInTheFilterAndTheHeaderTheSame(String nameFaset, String nameFilter) {
-//        String inFilter = Arrays.toString(plpHeadingTitle().getText().split("\\b[0-9]+\\b"));
-//        String inTitle = filter(nameFaset, nameFilter).getText();
-        Assert.assertTrue(plpHeadingTitle().getText().contains(filter(nameFaset, nameFilter).getText()),
-                "Количество товаров в фильтре и заголовке не совпадает");
+        String inFilter = plpHeadingTitle().getText().replaceAll(Arrays.toString(plpHeadingTitle()
+                .getText().split("\\b[0-9]+\\b")), "");
+
+        String inTitle = filter(nameFaset, nameFilter).getText();
+
+        Assert.assertEquals(inTitle, inFilter, "Количество товаров в фильтре и заголовке не совпадает");
     }
 
     /**
      * Проверка статуса фильтра (выбран или нет)
-     * @param nameFaset - название фасета
+     *
+     * @param nameFaset  - название фасета
      * @param nameFilter - название фильтра
      * @return - выбран?
      */
     default boolean gettingFilterStatus(String nameFaset, String nameFilter) {
         String status = statusFilter(nameFaset, nameFilter).getAttribute("data-client-prev-action");
-        return !status.contains("uncheck");
+        return status.contains("uncheck");
     }
 }

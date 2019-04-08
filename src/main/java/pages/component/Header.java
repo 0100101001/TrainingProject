@@ -8,9 +8,6 @@ import org.testng.Assert;
 import pages.popupMsgAndBanner.PopupMsgAndBanner;
 import ru.yandex.qatools.allure.annotations.Description;
 
-import static org.hamcrest.Matchers.*;
-import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
-
 public interface Header extends AtlasWebElement, PopupMsgAndBanner {
     /**
      * Ссылка на страницу авторизации "Войти"
@@ -25,8 +22,9 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Раздел навигационного меню
+     *
      * @param sectionName - название раздела: {Акции, Телевизоры, Ноутбуки и компьютеры, смартфоны и гаджеты,
-     *                   Фото и видео, Техника для дома, Красота и здоровье, Авто электроника, Игры и софт,
+     *                    Фото и видео, Техника для дома, Красота и здоровье, Авто электроника, Игры и софт,
      *                    Аксессуары, Apple}
      */
     @Description("Раздел навигационного меню - {{ sectionName }}")
@@ -35,6 +33,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Подраздел навигационного меню
+     *
      * @param subsectionName - название раздела:...
      */
     @Description("Подраздел навигационного меню - {{ subsectionName }}")
@@ -43,6 +42,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Пункт подраздела навигационного меню
+     *
      * @param itemSubsectionName - название пункта
      */
     @Description("Пункт подраздела навигационного меню - {{ itemSubMenuName }}")
@@ -60,6 +60,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Наведение на раздел навигационного меню
+     *
      * @param sectionName - название раздела
      */
     default void hoverOverNavMenuSection(String sectionName) {
@@ -72,6 +73,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Наведение и клик на пункт подраздела навигационного меню
+     *
      * @param itemSubsectionName - название раздела
      */
     default void hoverAndClickOverASubsectionItemInTheNavMenu(String itemSubsectionName) {
@@ -80,6 +82,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
 
     /**
      * Нажать на пункт подраздела навигационного меню
+     *
      * @param itemSubsectionName - название пункта
      */
     default void clickOnAItemOfSubsectionNavMenu(String itemSubsectionName) {

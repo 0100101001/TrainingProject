@@ -1,24 +1,24 @@
 package loginTests;
 
-import base.TestBase;
-import dataProvider.DataProvider;
+import base.Configuration;
+import base.WebTestRunner;
+import org.aeonbits.owner.ConfigFactory;
 import org.testng.annotations.Test;
 import pages.PageObject;
 import testData.users.LoginAndPassword;
 
-import java.io.IOException;
-
-public class TestLogin extends TestBase {
+public class LoginTest extends WebTestRunner {
+    private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties());
 
     @Test(description = "Проверка успешной авторизации")
     public void SuccessfulLoginTest() {
         LoginAndPassword loginAndPassword = new LoginAndPassword();
 
-        String login = loginAndPassword.login;
-        String password = loginAndPassword.password;
+        String login = configuration.userLogin();
+        String password = configuration.userPassword();
 
         // Перейти на сайт
-        onSite().openSite();
+        goToWebsite();
 
         // Перейти на страницу авторизации
         onSite().onHeader.goToLoginPage();
@@ -46,11 +46,11 @@ public class TestLogin extends TestBase {
     public void incorrectDataLoginTest() {
         LoginAndPassword loginAndPassword = new LoginAndPassword();
 
-        String login = loginAndPassword.invalidLogin;
-        String password = loginAndPassword.invalidPassword;
+        String login = configuration.userLoginInvalid();
+        String password = configuration.userPasswordInvalid();
 
         // Перейти на сайт
-        onSite().openSite();
+        goToWebsite();
 
         // Перейти на страницу авторизации
         onSite().onHeader.goToLoginPage();

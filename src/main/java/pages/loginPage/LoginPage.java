@@ -3,19 +3,17 @@ package pages.loginPage;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
-import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import pages.myAccountPage.MyAccountPage;
 import pages.popupMsgAndBanner.PopupMsgAndBanner;
 import ru.yandex.qatools.allure.annotations.Description;
-
-import static base.ApplicationManager.webDriver;
 
 public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
     @Description("Форма авторизации")
     @FindBy("//form[@id='login-form']")
     AtlasWebElement formLogin();
+
     /**
      * Поле ввода Телефона/Email
      */
@@ -47,6 +45,7 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
 
     /**
      * Ввод пароля
+     *
      * @param password - пароль
      */
     default void inputPassword(String password) {
@@ -62,7 +61,8 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
     }
 
     /**
-     *  Ввод логина
+     * Ввод логина
+     *
      * @param login - логин пользователя
      */
     default void inputLogin(String login) {
@@ -80,7 +80,7 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
     /**
      * Проверить, что открыта страница авторизации
      */
-    default void checkThatTheLoginPageIsOpen(){
+    default void checkThatTheLoginPageIsOpen() {
         Assert.assertTrue(getWrappedDriver().getCurrentUrl().contains("/login"),
                 "Переход на страницу авторизации не осуществлен");
     }
