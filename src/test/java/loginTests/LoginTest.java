@@ -5,14 +5,12 @@ import base.WebTestRunner;
 import org.aeonbits.owner.ConfigFactory;
 import org.testng.annotations.Test;
 import pages.PageObject;
-import testData.users.LoginAndPassword;
 
 public class LoginTest extends WebTestRunner {
     private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties());
 
     @Test(description = "Проверка успешной авторизации")
     public void SuccessfulLoginTest() {
-        LoginAndPassword loginAndPassword = new LoginAndPassword();
 
         String login = configuration.userLogin();
         String password = configuration.userPassword();
@@ -44,7 +42,6 @@ public class LoginTest extends WebTestRunner {
 
     @Test(description = "Проверка авторизации с некорректными данными")
     public void incorrectDataLoginTest() {
-        LoginAndPassword loginAndPassword = new LoginAndPassword();
 
         String login = configuration.userLoginInvalid();
         String password = configuration.userPasswordInvalid();
