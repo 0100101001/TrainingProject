@@ -53,7 +53,7 @@ public interface Header extends AtlasWebElement, PopupMsgAndBanner {
      * Переход с главной странице по ссылке "Войти" на страницу авторизации
      */
     default void goToLoginPage() {
-        closeOverlapLayer(); //закроем баннер, если появился
+//        closeOverlapLayer(); //закроем баннер, если появился
 
         linkToLoginPage().click(); //нажмем на ссылку "Войти"
     }

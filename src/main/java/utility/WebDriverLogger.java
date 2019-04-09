@@ -18,23 +18,33 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
         LOGGER.info(Colors.ANSI_PURPLE + "WebDriver navigated to " + Colors.ANSI_RESET + "'" + url + "'");
     }
 
-    @Override
-    public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver changed value for element - " + Colors.ANSI_RESET
-                + elementDescription(element));
-    }
+//    @Override
+//    public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+//        LOGGER.info(Colors.ANSI_PURPLE +"Locator - " + Colors.ANSI_RESET + by);
+//    }
+//
+//    @Override
+//    public void afterFindBy(By by, WebElement element, WebDriver driver) {
+//        LOGGER.info(by + Colors.ANSI_PURPLE +" - found" + Colors.ANSI_RESET);
+//    }
+
+//    @Override
+//    public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
+//        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver changed value for element - " + Colors.ANSI_RESET
+//                + elementDescription(element));
+//    }
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver click on element - " + Colors.ANSI_RESET
+        LOGGER.info(Colors.ANSI_PURPLE + "Сlick an element - " + Colors.ANSI_RESET
                 + elementDescription(element));
     }
 
-    @Override
-    public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver will change value for element - " + Colors.ANSI_RESET
-                + elementDescription(element));
-    }
+//    @Override
+//    public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
+//        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver will change value for element - " + Colors.ANSI_RESET
+//                + elementDescription(element));
+//    }
 
 //    @Override
 //    public void onException(Throwable throwable, WebDriver driver) {

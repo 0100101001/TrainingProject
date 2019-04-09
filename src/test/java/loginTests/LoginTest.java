@@ -14,7 +14,7 @@ public class LoginTest extends WebTestRunner {
 
         String login = configuration.userLogin();
         String password = configuration.userPassword();
-        System.out.println(login + " / " + password);
+
         // Перейти на сайт
         goToWebsite();
 

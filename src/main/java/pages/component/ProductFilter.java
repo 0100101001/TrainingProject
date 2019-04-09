@@ -10,6 +10,8 @@ import pages.plp.Plp;
 import ru.yandex.qatools.allure.annotations.Description;
 import utility.ActionsOnElements;
 
+import java.util.Arrays;
+
 public interface ProductFilter extends AtlasWebElement, Plp {
 
     @Description("Фильтр {{ nameFaset }}")
@@ -30,7 +32,6 @@ public interface ProductFilter extends AtlasWebElement, Plp {
 //    @Description("")
 //    @FindBy(".//div[@data-sel='plp-facet_block-category']")
 //    ElementsCollection<WebElement>filterCategory();
-
 
 //    default void getElementFilter(String nameItemFilter) {
 //        filterCategory().filter(WebElement::isDisplayed).filter(item -> item.getText()
@@ -92,13 +93,13 @@ public interface ProductFilter extends AtlasWebElement, Plp {
      * @param nameFilter - название фильтра
      */
     default void isTheNumberOfItemsInTheFilterAndTheHeaderTheSame(String nameFaset, String nameFilter) {
-        String inFilter = plpHeadingTitle().getText();/*.replaceAll(Arrays.toString(plpHeadingTitle()
-                .getText().split("\\b[0-9]+\\b")), "");*/
+        String inFilter = plpHeadingTitle().getText().replaceAll(Arrays.toString(plpHeadingTitle()
+                .getText().split("\\b[0-9]+\\b")), "");
 
         String inTitle = filter(nameFaset, nameFilter).getText();
 
-        Assert.assertTrue(plpHeadingTitle().getText().contains(filter(nameFaset, nameFilter).getText()), "Количество товаров в фильтре и заголовке не совпадает: "
-                + inFilter + " / " + inTitle);
+        Assert.assertTrue(plpHeadingTitle().getText().contains(filter(nameFaset, nameFilter).getText()),
+                "Количество товаров в фильтре и заголовке не совпадает: ");
     }
 
     /**

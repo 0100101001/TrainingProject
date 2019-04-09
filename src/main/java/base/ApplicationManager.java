@@ -16,8 +16,7 @@ import static java.lang.System.setProperty;
 public class ApplicationManager {
     public static EventFiringWebDriver webDriver;
     public static Atlas atlas;
-    private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties(),
-            System.getenv());
+    private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties());
 
     public void init() throws IOException {
 

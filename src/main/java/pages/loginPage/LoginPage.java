@@ -42,7 +42,6 @@ public interface LoginPage extends WebPage, MyAccountPage, PopupMsgAndBanner {
     @FindBy("//form[@id='login-form']//div[contains(@class, 'login-notification-error')]")
     AtlasWebElement messageNotificationError();
 
-
     /**
      * Ввод пароля
      *

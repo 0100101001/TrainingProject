@@ -14,6 +14,7 @@ import static base.ApplicationManager.webDriver;
 
 public interface PageObject extends WebSite {
 
+// появляется ошибка, что url не декларирован
 //    @Page
 //    MainPage onMainPage();
 //

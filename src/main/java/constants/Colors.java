@@ -1,6 +1,6 @@
 package constants;
 
-public final class Colors {
+public class Colors {
     /* ------- System out colors ------ */
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
