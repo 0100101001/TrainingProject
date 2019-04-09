@@ -51,7 +51,7 @@ public interface ProductFilter extends AtlasWebElement, Plp {
         if (faset(nameFaset).getAttribute("class").contains("collapsed")) {
             faset(nameFaset).click();
         }
-        getWrappedDriver().navigate().refresh();
+//        getWrappedDriver().navigate().refresh();
         if (!gettingFilterStatus(nameFaset, nameFilter)) {
             filter(nameFaset, nameFilter).click();
             waitForTheFilter();
@@ -71,7 +71,7 @@ public interface ProductFilter extends AtlasWebElement, Plp {
         if (faset(nameFaset).getAttribute("class").contains("collapsed")) {
             faset(nameFaset).click();
         }
-        getWrappedDriver().navigate().refresh();
+//        getWrappedDriver().navigate().refresh();
         if (gettingFilterStatus(nameFaset, nameFilter)) {
             filter(nameFaset, nameFilter).click();
             waitForTheFilter();

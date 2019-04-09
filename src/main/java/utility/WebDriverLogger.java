@@ -1,11 +1,15 @@
 package utility;
 
 import constants.Colors;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static base.ApplicationManager.webDriver;
 
 public class WebDriverLogger extends AbstractWebDriverEventListener {
     Colors colors = new Colors();
@@ -16,17 +20,23 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
         LOGGER.info(Colors.ANSI_PURPLE + "WebDriver navigated to " + Colors.ANSI_RESET + "'" + url + "'");
+
+        try {
+            ((JavascriptExecutor) webDriver).executeScript("$('.flocktory-widget-overlay').remove();");
+        } catch (Exception e) {
+        }
     }
 
-//    @Override
+    //    @Override
 //    public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 //        LOGGER.info(Colors.ANSI_PURPLE +"Locator - " + Colors.ANSI_RESET + by);
 //    }
 //
-//    @Override
-//    public void afterFindBy(By by, WebElement element, WebDriver driver) {
+    @Override
+    public void afterFindBy(By by, WebElement element, WebDriver driver) {
 //        LOGGER.info(by + Colors.ANSI_PURPLE +" - found" + Colors.ANSI_RESET);
-//    }
+        closeEvilBanner();
+    }
 
 //    @Override
 //    public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
@@ -64,4 +74,15 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
         return description;
     }
 
+    private void closeEvilBanner() {
+        String element1 = "//div[@class='flocktory-widget-overlay' and @data-vivaldi-spatnav-clickable='1']";
+        String element2 = ".flocktory-widget-overlay";
+
+        try {
+//            ((JavascriptExecutor) webDriver).executeScript("arguments[0].style.z-index = '0 !important';",
+//                    ".flocktory-widget-overlay");
+            ((JavascriptExecutor) webDriver).executeScript("$('.flocktory-widget-overlay').remove();");
+        } catch (Exception e) {
+        }
+    }
 }
