@@ -12,19 +12,13 @@ import org.slf4j.LoggerFactory;
 import static base.ApplicationManager.webDriver;
 
 public class WebDriverLogger extends AbstractWebDriverEventListener {
-    Colors colors = new Colors();
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(WebDriverLogger.class);
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver navigated to " + Colors.ANSI_RESET + "'" + url + "'");
-
-        try {
-            ((JavascriptExecutor) webDriver).executeScript("$('.flocktory-widget-overlay').remove();");
-        } catch (Exception e) {
-        }
+        LOGGER.info(Colors.ANSI_PURPLE + "Navigated to " + Colors.ANSI_RESET + "'" + url + "'");
     }
 
     //    @Override
@@ -35,7 +29,7 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
     @Override
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
 //        LOGGER.info(by + Colors.ANSI_PURPLE +" - found" + Colors.ANSI_RESET);
-        closeEvilBanner();
+//        closeEvilBanner();
     }
 
 //    @Override
@@ -46,11 +40,18 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
+        closeEvilBanner();
+
         LOGGER.info(Colors.ANSI_PURPLE + "Сlick an element - " + Colors.ANSI_RESET
                 + elementDescription(element));
     }
 
-//    @Override
+    @Override
+    public void afterClickOn(WebElement element, WebDriver driver) {
+        LOGGER.info(Colors.ANSI_PURPLE + "Сlick done !" + Colors.ANSI_RESET);
+    }
+
+    //    @Override
 //    public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 //        LOGGER.info(Colors.ANSI_PURPLE + "WebDriver will change value for element - " + Colors.ANSI_RESET
 //                + elementDescription(element));
@@ -75,14 +76,28 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
     }
 
     private void closeEvilBanner() {
-        String element1 = "//div[@class='flocktory-widget-overlay' and @data-vivaldi-spatnav-clickable='1']";
-        String element2 = ".flocktory-widget-overlay";
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+
+        String element = "return $('.flocktory-widget-overlay').each(function() { "
+                + "return $(this).css('z-index') == '2000000000'; }).get(0)";
+
+        String scriptUnhide = "arguments[0].setAttribute('style','z-index:10 !important;');";
 
         try {
-//            ((JavascriptExecutor) webDriver).executeScript("arguments[0].style.z-index = '0 !important';",
-//                    ".flocktory-widget-overlay");
-            ((JavascriptExecutor) webDriver).executeScript("$('.flocktory-widget-overlay').remove();");
-        } catch (Exception e) {
+
+            Object evilBanner = js.executeScript(element + ";");
+
+            if (evilBanner != null) {
+
+                // удалить div с баннером со страницы
+//                js.executeScript(element + ".remove();");
+
+                // изменить порядок расположения по оси Z
+                js.executeScript("return $('.flocktory-widget-overlay').each(function() { "
+                        + "return $(this).css('z-index') == '2000000000'; })" +
+                        ".get(0).setAttribute('style','z-index:-10 !important;')");
+            }
+        } catch (Exception ignored) { // нам не нужно это исключение
         }
     }
 }
