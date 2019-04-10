@@ -81,8 +81,6 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
         String element = "return $('.flocktory-widget-overlay').each(function() { "
                 + "return $(this).css('z-index') == '2000000000'; }).get(0)";
 
-        String scriptUnhide = "arguments[0].setAttribute('style','z-index:10 !important;');";
-
         try {
 
             Object evilBanner = js.executeScript(element + ";");
@@ -90,12 +88,12 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
             if (evilBanner != null) {
 
                 // удалить div с баннером со страницы
-//                js.executeScript(element + ".remove();");
+                js.executeScript(element + ".remove();");
 
                 // изменить порядок расположения по оси Z
-                js.executeScript("return $('.flocktory-widget-overlay').each(function() { "
-                        + "return $(this).css('z-index') == '2000000000'; })" +
-                        ".get(0).setAttribute('style','z-index:-10 !important;')");
+//                js.executeScript("return $('.flocktory-widget-overlay').each(function() { "
+//                        + "return $(this).css('z-index') == '2000000000'; })" +
+//                        ".get(0).setAttribute('style','z-index:-10 !important;')");
             }
         } catch (Exception ignored) { // нам не нужно это исключение
         }
