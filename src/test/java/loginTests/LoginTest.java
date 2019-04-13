@@ -19,7 +19,7 @@ public class LoginTest extends WebTestRunner {
         goToWebsite();
 
         // Перейти на страницу авторизации
-        onSite().onHeader.goToLoginPage();
+        onSite().onHeader.linkToLoginPage().click();
 
         // Проверить, что открыта страница авторизации
         onSite().onLoginPage.checkThatTheLoginPageIsOpen();
@@ -28,13 +28,13 @@ public class LoginTest extends WebTestRunner {
         onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
-        onSite().onLoginPage.inputLogin(login);
+        onSite().onLoginPage.inputLogin().sendKeys(login);
 
         // Ввести пароль
-        onSite().onLoginPage.inputPassword(password);
+        onSite().onLoginPage.inputPassword().sendKeys(password);
 
         // Нажать кнопку завершения авторизации
-        onSite().onLoginPage.pressSubmitButton();
+        onSite().onLoginPage.buttonSubmit().click();
 
         // Проверить, что авторизация успешна, отображается аватар пользователя
         onSite().onMyAccountPage.loginCheck();
@@ -50,7 +50,7 @@ public class LoginTest extends WebTestRunner {
         goToWebsite();
 
         // Перейти на страницу авторизации
-        onSite().onHeader.goToLoginPage();
+        onSite().onHeader.linkToLoginPage().click();
 
         // Проверить, что открыта страница авторизации
         onSite().onLoginPage.checkThatTheLoginPageIsOpen();
@@ -59,13 +59,13 @@ public class LoginTest extends WebTestRunner {
         onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
-        onSite().onLoginPage.inputLogin(login);
+        onSite().onLoginPage.inputLogin().sendKeys(login);
 
         // Ввести пароль
-        onSite().onLoginPage.inputPassword(password);
+        onSite().onLoginPage.inputPassword().sendKeys(password);
 
         // Нажать кнопку завершения авторизации
-        onSite().onLoginPage.pressSubmitButton();
+        onSite().onLoginPage.buttonSubmit().click();
 
         // Проверить, что авторизация не удалась - отображается сообщение об ошибке
         onSite().onLoginPage.checkNotificationError();

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public class ActionsOnElements {
 
-    public void scrollToElement(AtlasWebElement element, WebDriver webDriver) {
+    public static void scrollToElement(AtlasWebElement element, WebDriver webDriver) {
         ((JavascriptExecutor) webDriver).executeScript(
                 "arguments[0].scrollIntoView(true); window.scrollBy(0, -window.innerHeight / 4);", element);
     }

@@ -14,7 +14,7 @@ public class NetworkHelper {
      * @param address - url
      * @throws IOException - исключение
      */
-    public void getStatusCodeOfServer(String address) throws IOException {
+    public static void getStatusCodeOfServer(String address) throws IOException {
         URL url = new URL(address);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");

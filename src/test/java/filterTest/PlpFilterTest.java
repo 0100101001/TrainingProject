@@ -6,7 +6,6 @@ import pages.PageObject;
 
 public class PlpFilterTest extends WebTestRunner {
 
-
     @Test(description = "Проверка работы фильтра по категории и бренду")
     public void filterByCategoryAndBrandTest() throws InterruptedException {
 
@@ -38,7 +37,7 @@ public class PlpFilterTest extends WebTestRunner {
         onSite().onProductFilter.isTheNumberOfItemsInTheFilterAndTheHeaderTheSame("Бренд", "Sony");
 
         // В фасете "Бренд" снять выбор с фильтра "Sony"
-        onSite().onProductFilter.removeTheFilterInFaset("Бренд", "Sony");
+        onSite().onProductFilter.removeTheFilterInFacets("Бренд", "Sony");
 
         // Проверить совпадает ли количество товаров в фильтре "4К" фасета "Категории" и заголовке
         onSite().onProductFilter.isTheNumberOfItemsInTheFilterAndTheHeaderTheSame("Категории", "4K");

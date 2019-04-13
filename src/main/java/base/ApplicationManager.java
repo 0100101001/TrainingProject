@@ -9,16 +9,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import utility.WebDriverLogger;
 
-import java.io.IOException;
-
 import static java.lang.System.setProperty;
 
 public class ApplicationManager {
     public static EventFiringWebDriver webDriver;
     public static Atlas atlas;
+
     private Configuration configuration = ConfigFactory.create(Configuration.class, System.getProperties());
 
-    public void init() throws IOException {
+    public void init() {
 
         try {
             if (configuration.browser().contains("hrome")) {
@@ -36,9 +35,7 @@ public class ApplicationManager {
             webDriver.register(new WebDriverLogger());
         }
         webDriver.manage().window().maximize();
-
         atlas = new Atlas(new WebDriverConfiguration(webDriver));
-
     }
 
     public void stop() {

@@ -1,8 +1,7 @@
 package pages.mainPage;
 
-import io.qameta.atlas.webdriver.WebPage;
-import pages.popupMsgAndBanner.PopupMsgAndBanner;
+import io.qameta.atlas.webdriver.AtlasWebElement;
 
-public interface MainPage extends WebPage, PopupMsgAndBanner {
+public interface MainPage extends AtlasWebElement {
 
 }

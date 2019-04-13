@@ -3,9 +3,10 @@ package base;
 import org.aeonbits.owner.ConfigFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import utility.NetworkHelper;
 
 import java.io.IOException;
+
+import static utility.NetworkHelper.getStatusCodeOfServer;
 
 public class WebTestRunner extends ApplicationManager {
 
@@ -14,8 +15,7 @@ public class WebTestRunner extends ApplicationManager {
     @BeforeMethod
     public void setUp() throws IOException {
         /* Проверим код ответа сервера */
-        NetworkHelper networkHelper = new NetworkHelper();
-        networkHelper.getStatusCodeOfServer(configuration.siteUrl());
+        getStatusCodeOfServer(configuration.siteUrl());
 
         init();
     }
@@ -25,9 +25,6 @@ public class WebTestRunner extends ApplicationManager {
         stop();
     }
 
-    /**
-     * Переход по url
-     */
     public void goToWebsite() {
         webDriver.get(configuration.siteUrl());
     }

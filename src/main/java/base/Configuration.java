@@ -2,7 +2,7 @@ package base;
 
 import org.aeonbits.owner.Config;
 
-//@Config.LoadPolicy(Config.LoadType.MERGE)
+@Config.LoadPolicy(Config.LoadType.MERGE)
 @Config.Sources({"file:src/main/java/config/project.properties", "file:src/main/java/config/credentials.properties"})
 
 public interface Configuration extends Config {
