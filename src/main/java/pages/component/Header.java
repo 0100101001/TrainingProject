@@ -18,12 +18,6 @@ public interface Header extends WebPage {
     @FindBy(".//nav[@class='header-nav']")
     AtlasWebElement navMenu();
 
-    /**
-     * Раздел навигационного меню
-     * @param sectionName - название раздела: {Акции, Телевизоры, Ноутбуки и компьютеры, смартфоны и гаджеты,
-     *                    Фото и видео, Техника для дома, Красота и здоровье, Авто электроника, Игры и софт,
-     *                    Аксессуары, Apple}
-     */
     @Description("Раздел навигационного меню - {{ sectionName }}")
     @FindBy(".//li[contains(@class, 'header-nav-item') and contains(string(), '{{ sectionName }}')]")
     AtlasWebElement navigationMenuSection(@Param("sectionName") String sectionName);

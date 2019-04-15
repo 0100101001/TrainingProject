@@ -33,12 +33,7 @@ public interface ProductFilter extends AtlasWebElement, Plp {
     @FindBy(".//aside[contains(@class,  'o-plp-container__filters')]")
     AtlasWebElement containerFilters();
 
-    /**
-     * Выбрать фильтр nameFilter в фасете nameFacets
-     *
-     * @param nameFacets  - название фасета
-     * @param nameFilter - название фильтра
-     */
+
     default void toSetTheFilterInFaset(String nameFacets, String nameFilter) {
         scrollToElement(facets(nameFacets), getWrappedDriver());
 
@@ -51,11 +46,6 @@ public interface ProductFilter extends AtlasWebElement, Plp {
         Assert.assertTrue(isSelectedFilter(nameFacets, nameFilter), "Фильтр не выбран!");
     }
 
-    /**
-     * Снять выбор фильтра в фасете
-     * @param nameFacets  - название фасета
-     * @param nameFilter - название фильтра
-     */
     default void removeTheFilterInFacets(String nameFacets, String nameFilter) {
         scrollToElement(facets(nameFacets), getWrappedDriver());
 
@@ -74,15 +64,9 @@ public interface ProductFilter extends AtlasWebElement, Plp {
                         "class", "o-plp-container__filters_load")));
     }
 
-    /**
-     * Проверка, совпадает ли количество товаров в фильтре и заголовке
-     *
-     * @param nameFacets  - название фасета
-     * @param nameFilter - название фильтра
-     */
     default void isTheNumberOfItemsInTheFilterAndTheHeaderTheSame(String nameFacets, String nameFilter) {
         Assert.assertTrue(numberOfItemsInTheList().getText().contains(filter(nameFacets, nameFilter).getText()),
-                "Количество товаров в фильтре и заголовке не совпадает: ");
+                "Количество товаров в фильтре и заголовке не совпадает!");
     }
 
     default boolean isSelectedFilter(String nameFacets, String nameFilter) {

@@ -1,7 +1,7 @@
 package pages.mainPage;
 
-import io.qameta.atlas.webdriver.AtlasWebElement;
+import io.qameta.atlas.webdriver.WebPage;
 
-public interface MainPage extends AtlasWebElement {
+public interface MainPage extends WebPage {
 
 }

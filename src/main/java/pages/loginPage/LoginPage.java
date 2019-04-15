@@ -4,10 +4,9 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import org.testng.Assert;
-import pages.myAccountPage.MyAccountPage;
 import ru.yandex.qatools.allure.annotations.Description;
 
-public interface LoginPage extends WebPage, MyAccountPage {
+public interface LoginPage extends WebPage {
 
     @Description("Форма авторизации")
     @FindBy("//form[@id='login-form']")

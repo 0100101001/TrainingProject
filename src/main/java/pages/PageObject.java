@@ -12,23 +12,9 @@ import static base.ApplicationManager.webDriver;
 
 public interface PageObject extends WebSite {
 
-// появляется ошибка, что url не декларирован
-//    @Page
-//    MainPage onMainPage();
-//
-//    @Page
-//    LoginPage onLoginPage();
-//
-//    @Page
-//    MyAccountPage onMyAccountPage();
-//
-//    @Page
-//    PopupMsgAndBanner onPopupMsgAndBanner();
-
     LoginPage onLoginPage = atlas.create(webDriver, LoginPage.class);
     MyAccountPage onMyAccountPage = atlas.create(webDriver, MyAccountPage.class);
     Header onHeader = atlas.create(webDriver, Header.class);
     Plp onPlp = atlas.create(webDriver, Plp.class);
     ProductFilter onProductFilter = atlas.create(webDriver, ProductFilter.class);
-
 }

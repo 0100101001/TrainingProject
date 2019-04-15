@@ -48,7 +48,7 @@ public class WebDriverLogger extends AbstractWebDriverEventListener {
     }
 
     private void removeEvilBanner() {
-        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        JavascriptExecutor js = webDriver;
         String element = "return $('.flocktory-widget-overlay').each(function() { "
                 + "return $(this).css('z-index') == '2000000000'; }).get(0)";
         try {

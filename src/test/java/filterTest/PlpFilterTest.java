@@ -7,7 +7,7 @@ import pages.PageObject;
 public class PlpFilterTest extends WebTestRunner {
 
     @Test(description = "Проверка работы фильтра по категории и бренду")
-    public void filterByCategoryAndBrandTest() throws InterruptedException {
+    public void filterByCategoryAndBrandTest() {
 
         // Перейти на сайт
         goToWebsite();
