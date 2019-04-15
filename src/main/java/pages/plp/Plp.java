@@ -13,7 +13,7 @@ public interface Plp extends WebPage {
     AtlasWebElement plpHeadingTitle();
 
     @Description("Количество товаров в списке")
-    @FindBy(".//span[@class='c-plp-heading__count']")
+    @FindBy(".//span[@class = 'c-plp-heading__count']")
     AtlasWebElement numberOfItemsInTheList();
 
     default void checkThatTheProductListPageIsOpen(String titleName) {
