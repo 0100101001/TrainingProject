@@ -3,13 +3,13 @@ package pages.myAccountPage;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
+import io.qameta.atlas.webdriver.extension.Name;
 import org.testng.Assert;
 import pages.loginPage.LoginPage;
-import ru.yandex.qatools.allure.annotations.Description;
 
 public interface MyAccountPage extends WebPage, LoginPage {
 
-    @Description("Аватар пользователя")
+    @Name("Аватар пользователя")
     @FindBy("//div[@class= 'header-main-area']//span[@class='my-account-personal-photo-placeholder']")
     AtlasWebElement userAvatar();
 

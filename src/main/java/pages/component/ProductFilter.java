@@ -2,34 +2,34 @@ package pages.component;
 
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.extension.FindBy;
+import io.qameta.atlas.webdriver.extension.Name;
 import io.qameta.atlas.webdriver.extension.Param;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.plp.Plp;
-import ru.yandex.qatools.allure.annotations.Description;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
 import static utility.ActionsOnElements.scrollToElement;
 
 public interface ProductFilter extends AtlasWebElement, Plp {
 
-    @Description("Фильтр {{ nameFacets }}")
+    @Name("Фильтр {{ nameFacets }}")
     @FindBy(".//form[contains(@class, 'c-plp-facets')]" +
             "//span[@data-toggle='collapse' and contains(string(), '{{ nameFacets }}')]")
     AtlasWebElement facets(@Param("nameFacets") String nameFacets);
 
-    @Description("Фильтр {{ nameFilter }} фасета {{ nameFacets }}")
+    @Name("Фильтр {{ nameFilter }} фасета {{ nameFacets }}")
     @FindBy(".//span[@data-toggle='collapse' and contains(string(), '{{ nameFacets }}')]" +
             "//ancestor::div[@data-facet='form']//child::li[contains(string(), '{{ nameFilter }}')]//label//span")
     AtlasWebElement filter(@Param("nameFacets") String nameFacets, @Param("nameFilter") String nameFilter);
 
-    @Description("Статус фильтра {{ nameFilter }} в фасете {{ nameFacets }}")
+    @Name("Статус фильтра {{ nameFilter }} в фасете {{ nameFacets }}")
     @FindBy(".//span[@data-toggle='collapse' and contains(string(), '{{ nameFacets }}')]" +
             "//ancestor::div[@data-facet='form']//child::li[contains(string(), '{{ nameFilter }}')]//input")
     AtlasWebElement statusFilter(@Param("nameFacets") String nameFacets, @Param("nameFilter") String nameFilter);
 
-    @Description("Блок с фильтрами")
+    @Name("Блок с фильтрами")
     @FindBy(".//aside[contains(@class,  'o-plp-container__filters')]")
     AtlasWebElement containerFilters();
 

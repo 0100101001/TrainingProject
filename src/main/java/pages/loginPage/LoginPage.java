@@ -3,28 +3,28 @@ package pages.loginPage;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
+import io.qameta.atlas.webdriver.extension.Name;
 import org.testng.Assert;
-import ru.yandex.qatools.allure.annotations.Description;
 
 public interface LoginPage extends WebPage {
 
-    @Description("Форма авторизации")
+    @Name("Форма авторизации")
     @FindBy("//form[@id='login-form']")
     AtlasWebElement formLogin();
 
-    @Description("Логин")
+    @Name("Логин")
     @FindBy("//input[@id='frm-email']")
     AtlasWebElement inputLogin();
 
-    @Description("Пароль")
+    @Name("Пароль")
     @FindBy("//input[@id='frm-password']")
     AtlasWebElement inputPassword();
 
-    @Description("Кнопка 'Продолжить'")
+    @Name("Кнопка 'Продолжить'")
     @FindBy("//input[@name='loginEmailPhone']")
     AtlasWebElement buttonSubmit();
 
-    @Description("Сообщение об ошибке авторизации")
+    @Name("Сообщение об ошибке авторизации")
     @FindBy("//form[@id='login-form']//div[contains(@class, 'login-notification-error')]")
     AtlasWebElement messageNotificationError();
 
