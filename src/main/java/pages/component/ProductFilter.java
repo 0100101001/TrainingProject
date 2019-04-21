@@ -4,13 +4,19 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.Name;
 import io.qameta.atlas.webdriver.extension.Param;
+import org.assertj.core.api.Fail;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import pages.plp.Plp;
 
+import static constants.Colors.ANSI_PURPLE;
+import static constants.Colors.ANSI_RESET;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
 import static utility.ActionsOnElements.scrollToElement;
+import static utility.WebDriverLogger.LOGGER;
 
 public interface ProductFilter extends AtlasWebElement, Plp {
 
@@ -37,25 +43,32 @@ public interface ProductFilter extends AtlasWebElement, Plp {
     default void toSetTheFilterInFaset(String nameFacets, String nameFilter) {
         scrollToElement(facets(nameFacets), getWrappedDriver());
 
-        Assert.assertTrue(isOpenFacets(nameFacets), "Фасет не раскрыт!");
-        Assert.assertTrue(isSelectedFilter(nameFacets, nameFilter), "Фильтр уже установлен!");
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(isOpenFacets(nameFacets)).as("Фасет не раскрыт!").isTrue();
+        softAssertions.assertThat(isSelectedFilter(nameFacets, nameFilter))
+                .as("Фильтр уже установлен!").isTrue();
+        softAssertions.assertAll();
 
         filter(nameFacets, nameFilter).click();
         waitForTheFilter();
 
-        Assert.assertTrue(isSelectedFilter(nameFacets, nameFilter), "Фильтр не выбран!");
+        assertThat(isSelectedFilter(nameFacets, nameFilter)).as("Фильтр не выбран!").isTrue();
     }
 
     default void removeTheFilterInFacets(String nameFacets, String nameFilter) {
         scrollToElement(facets(nameFacets), getWrappedDriver());
 
-        Assert.assertTrue(isOpenFacets(nameFacets), "Фасет не раскрыт!");
-        Assert.assertFalse(isSelectedFilter(nameFacets, nameFilter), "Фильтр уже снят!");
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(isOpenFacets(nameFacets)).as("Фасет не раскрыт!").isTrue();
+        softAssertions.assertThat(isSelectedFilter(nameFacets, nameFilter)).as("Фильтр уже снят!").isFalse();
+        softAssertions.assertAll();
 
         filter(nameFacets, nameFilter).click();
         waitForTheFilter();
 
-        Assert.assertFalse(isSelectedFilter(nameFacets, nameFilter), "Фильтр не снят!");
+        assertThat(isSelectedFilter(nameFacets, nameFilter)).as("Фильтр не снят!").isFalse();
     }
 
     default void waitForTheFilter() {
@@ -65,8 +78,14 @@ public interface ProductFilter extends AtlasWebElement, Plp {
     }
 
     default void isTheNumberOfItemsInTheFilterAndTheHeaderTheSame(String nameFacets, String nameFilter) {
-        Assert.assertTrue(numberOfItemsInTheList().getText().contains(filter(nameFacets, nameFilter).getText()),
-                "Количество товаров в фильтре и заголовке не совпадает!");
+        try {
+            assertThat(numberOfItemsInTheList().getText().trim())
+                    .as("Количество товаров в фильтре и заголовке не совпадает!")
+                    .isEqualTo(filter(nameFacets, nameFilter).getText().trim());
+        } catch (NoSuchElementException e) {
+            LOGGER.info(ANSI_PURPLE + "Element not found: " + ANSI_RESET + e);
+            assertThat((char[]) Fail.fail(""));
+        }
     }
 
     default boolean isSelectedFilter(String nameFacets, String nameFilter) {

@@ -24,9 +24,6 @@ public class LoginTest extends WebTestRunner {
         // Проверить, что открыта страница авторизации
         onSite().onLoginPage.checkThatTheLoginPageIsOpen();
 
-        // Проверить, что отображается форма авторизации
-        onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
-
         // Ввести логин
         onSite().onLoginPage.inputLogin().sendKeys(login);
 
@@ -54,9 +51,6 @@ public class LoginTest extends WebTestRunner {
 
         // Проверить, что открыта страница авторизации
         onSite().onLoginPage.checkThatTheLoginPageIsOpen();
-
-        // Проверить, что отображается форма авторизации
-        onSite().onLoginPage.verifyThatTheLoginformIsDisplayed();
 
         // Ввести логин
         onSite().onLoginPage.inputLogin().sendKeys(login);

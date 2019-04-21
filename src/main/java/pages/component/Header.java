@@ -5,8 +5,16 @@ import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.Name;
 import io.qameta.atlas.webdriver.extension.Param;
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Fail;
+import org.openqa.selenium.NoSuchElementException;
+
+import static constants.Colors.ANSI_PURPLE;
+import static constants.Colors.ANSI_RESET;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
+import static utility.ActionsOnElements.moveToElement;
+import static utility.WebDriverLogger.LOGGER;
 
 public interface Header extends WebPage {
 
@@ -31,15 +39,17 @@ public interface Header extends WebPage {
     AtlasWebElement itemSubsection(@Param("itemSubsectionName") String itemSubsectionName);
 
     default void hoverOverNavMenuSection(String sectionName) {
-        new Actions(getWrappedDriver()).moveToElement(navigationMenuSection(sectionName)).perform();
-        Assert.assertTrue(navigationMenuSection(sectionName).getAttribute("class").contains("active"));
-    }
-
-    default void hoverAndClickOverASubsectionItemInTheNavMenu(String itemSubsectionName) {
-        new Actions(getWrappedDriver()).moveToElement(itemSubsection(itemSubsectionName)).click().perform();
+        moveToElement(navigationMenuSection(sectionName), getWrappedDriver());
+        Assertions.assertThat(navigationMenuSection(sectionName).getAttribute("class"))
+                .as("Навигационное меню не раскрыто!").contains("active");
     }
 
     default void checkNavMenuIsDisplayed() {
-        Assert.assertTrue(navMenu().isDisplayed(), "Навигационное меню не отображается");
+        try {
+            assertThat("Навигационное меню не отображается", navMenu(), displayed());
+        } catch (NoSuchElementException e) {
+            LOGGER.info(ANSI_PURPLE + "Element not found: " + ANSI_RESET + e);
+            Assertions.assertThat((char[]) Fail.fail(""));
+        }
     }
 }

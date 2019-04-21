@@ -1,8 +1,14 @@
 package filterTest;
 
 import base.WebTestRunner;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.Fail;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.Test;
 import pages.PageObject;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
 
 public class PlpFilterTest extends WebTestRunner {
 
@@ -13,16 +19,20 @@ public class PlpFilterTest extends WebTestRunner {
         goToWebsite();
 
         // Проверить, что навигационное меню отображается
-        onSite().onHeader.checkNavMenuIsDisplayed();
+        try {
+            assertThat("Навигационное меню не отображается", onSite().onHeader.navMenu(), displayed());
+        } catch (NoSuchElementException e) {
+            Assertions.assertThat((char[]) Fail.fail("Елемент не найден: " + e));
+        }
 
         // Навести на раздел "Телевизоры" навигационного меню
         onSite().onHeader.hoverOverNavMenuSection("Телевизоры");
 
         // Нажать на пункт "Все телевизоры" подраздела "Телевизоры"
-        onSite().onHeader.hoverAndClickOverASubsectionItemInTheNavMenu("Все телевизоры");
+        onSite().onHeader.itemSubsection("Все телевизоры").click();
 
-        // Проверить, что открыта страница со списком телевизоров
-        onSite().onPlp.checkThatTheProductListPageIsOpen("Телевизоры");
+        // Проверить, что открыта страница телевизоров
+        onSite().onPlp.checkThatTheExpectedPageIsOpen("Телевизоры");
 
         // В фасете "Категории" выбрать фильтр "4К"
         onSite().onProductFilter.toSetTheFilterInFaset("Категории", "4K");

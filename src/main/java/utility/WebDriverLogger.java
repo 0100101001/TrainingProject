@@ -1,64 +1,50 @@
 package utility;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 import static base.ApplicationManager.webDriver;
-import static constants.Colors.ANSI_PURPLE;
-import static constants.Colors.ANSI_RESET;
+import static constants.Colors.*;
+import static utility.ActionsOnElements.removeEvilBanner;
 
 public class WebDriverLogger extends AbstractWebDriverEventListener {
 
-    private static final Logger LOGGER = LoggerFactory
+    public static final Logger LOGGER = LoggerFactory
             .getLogger(WebDriverLogger.class);
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
-        LOGGER.info(ANSI_PURPLE + "Navigated to " + ANSI_RESET + "'" + url + "'");
+        LOGGER.info(ANSI_PURPLE + "Navigated to: " + ANSI_RESET + "'" + url + "'");
     }
 
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
-        removeEvilBanner();
+        removeEvilBanner(webDriver);
 
-        LOGGER.info(ANSI_PURPLE + "Сlick an element - " + ANSI_RESET
-                + elementDescription(element));
+        LOGGER.info(ANSI_PURPLE + "Сlick an element: " + ANSI_RESET
+                + element.toString().substring(element.toString().lastIndexOf("-> ") + 1));
     }
 
     @Override
     public void afterClickOn(WebElement element, WebDriver driver) {
-        LOGGER.info(ANSI_PURPLE + "Сlick done !" + ANSI_RESET);
+        LOGGER.info(ANSI_GREEN + "Сlick done !" + ANSI_RESET);
     }
 
-    private String elementDescription(WebElement element) {
-        String description = ANSI_PURPLE + "tag:" + ANSI_RESET + element.getTagName();
-        if (element.getAttribute(ANSI_PURPLE + "id" + ANSI_RESET) != null) {
-            description += ANSI_PURPLE + " id: " + ANSI_RESET + element.getAttribute("id");
-        } else if (element.getAttribute(ANSI_PURPLE + "name" + ANSI_RESET) != null) {
-            description += ANSI_PURPLE + " name: " + ANSI_RESET + element.getAttribute("name");
-        }
+    @Override
+    public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
+        removeEvilBanner(webDriver);
 
-        description += " ('" + element.getText() + "')";
-
-        return description;
+        LOGGER.info(ANSI_PURPLE + "Enter the text '" + Arrays.toString(keysToSend) + "' in the element: " + ANSI_RESET
+                + element.toString().substring(element.toString().lastIndexOf("-> ") + 1));
     }
 
-    private void removeEvilBanner() {
-        JavascriptExecutor js = webDriver;
-        String element = "return $('.flocktory-widget-overlay').each(function() { "
-                + "return $(this).css('z-index') == '2000000000'; }).get(0)";
-        try {
-            Object evilBanner = js.executeScript(element + ";");
-
-            if (evilBanner != null) {
-                // удалить div с баннером со страницы
-                js.executeScript(element + ".remove();");
-            }
-        } catch (Exception ignored) { // нам не нужно это исключение
-        }
+    @Override
+    public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
+        LOGGER.info(ANSI_GREEN + "The text entered!");
     }
 }

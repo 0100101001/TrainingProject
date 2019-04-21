@@ -4,7 +4,16 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.Name;
-import org.testng.Assert;
+import org.assertj.core.api.Fail;
+import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.MatcherAssert;
+import org.openqa.selenium.NoSuchElementException;
+
+import static constants.Colors.ANSI_PURPLE;
+import static constants.Colors.ANSI_RESET;
+import static org.assertj.core.api.Assertions.assertThat;
+import static ru.yandex.qatools.matchers.webdriver.DisplayedMatcher.displayed;
+import static utility.WebDriverLogger.LOGGER;
 
 public interface LoginPage extends WebPage {
 
@@ -29,16 +38,27 @@ public interface LoginPage extends WebPage {
     AtlasWebElement messageNotificationError();
 
     default void checkNotificationError() {
-        Assert.assertTrue(messageNotificationError().isDisplayed(), "Сообщение об ошибке не отображается");
+        try {
+            MatcherAssert.assertThat("Сообщение об ошибке не отображается",
+                    messageNotificationError(), displayed());
+        } catch (NoSuchElementException e) {
+            LOGGER.info(ANSI_PURPLE + "Element not found: " + ANSI_RESET + e);
+            assertThat((char[]) Fail.fail(""));
+        }
     }
 
     default void checkThatTheLoginPageIsOpen() {
-        Assert.assertTrue(getWrappedDriver().getCurrentUrl().contains("/login"),
-                "Переход на страницу авторизации не осуществлен");
-    }
-
-    default void verifyThatTheLoginformIsDisplayed() {
-        Assert.assertTrue(formLogin().isDisplayed(), "Форма авторизации не отображается");
+        SoftAssertions softAssertions = new SoftAssertions();
+        try {
+            softAssertions.assertThat(formLogin().isDisplayed())
+                    .as("Форма авторизации не отображается!").isTrue();
+            softAssertions.assertThat(getWrappedDriver().getCurrentUrl())
+                    .as("Страница авторизации не открыта!").contains("/login");
+            softAssertions.assertAll();
+        } catch (NoSuchElementException e) {
+            LOGGER.info(ANSI_PURPLE + "Element not found: " + ANSI_RESET + e);
+            assertThat((char[]) Fail.fail(""));
+        }
     }
 }
 

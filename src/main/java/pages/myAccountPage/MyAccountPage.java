@@ -4,8 +4,15 @@ import io.qameta.atlas.webdriver.AtlasWebElement;
 import io.qameta.atlas.webdriver.WebPage;
 import io.qameta.atlas.webdriver.extension.FindBy;
 import io.qameta.atlas.webdriver.extension.Name;
-import org.testng.Assert;
+import org.assertj.core.api.Fail;
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.NoSuchElementException;
 import pages.loginPage.LoginPage;
+
+import static constants.Colors.ANSI_PURPLE;
+import static constants.Colors.ANSI_RESET;
+import static org.assertj.core.api.Assertions.assertThat;
+import static utility.WebDriverLogger.LOGGER;
 
 public interface MyAccountPage extends WebPage, LoginPage {
 
@@ -14,8 +21,16 @@ public interface MyAccountPage extends WebPage, LoginPage {
     AtlasWebElement userAvatar();
 
     default void loginCheck() {
-        Assert.assertTrue(userAvatar().isDisplayed(), "Аватар пользователя не отображается");
-        Assert.assertFalse(getWrappedDriver().getCurrentUrl().contains("login"),
-                "Открыта страница авторизации" + getWrappedDriver().getCurrentUrl());
+        SoftAssertions softAssertions = new SoftAssertions();
+        try {
+            softAssertions.assertThat(userAvatar().isDisplayed())
+                    .as("Аватар пользователя не отображается!").isTrue();
+            softAssertions.assertThat(getWrappedDriver().getCurrentUrl())
+                    .as("Открыта страница авторизации!").isNotEqualTo("login");
+            softAssertions.assertAll();
+        } catch (NoSuchElementException e) {
+            LOGGER.info(ANSI_PURPLE + "Element not found: " + ANSI_RESET + e);
+            assertThat((char[]) Fail.fail(""));
+        }
     }
 }
